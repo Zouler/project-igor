@@ -253,11 +253,31 @@ bottom_radius = 0.04
 height = 0.45
 radial_segments = 10
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_cargo"]
+size = Vector3(0.52, 0.32, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cargo_tray"]
+size = Vector3(0.44, 0.045, 0.32)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cargo_tray"]
+albedo_color = Color(0.58, 0.42, 0.3, 1)
+roughness = 0.58
+
+[sub_resource type="BoxMesh" id="BoxMesh_cargo_rail"]
+size = Vector3(0.04, 0.09, 0.34)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cargo_rail"]
+albedo_color = Color(0.75, 0.55, 0.38, 1)
+roughness = 0.48
+
+[sub_resource type="BoxMesh" id="BoxMesh_cargo_back"]
+size = Vector3(0.44, 0.1, 0.04)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-content_margin_left = 14.0
-content_margin_top = 12.0
-content_margin_right = 14.0
-content_margin_bottom = 12.0
+content_margin_left = 16.0
+content_margin_top = 14.0
+content_margin_right = 16.0
+content_margin_bottom = 14.0
 bg_color = Color(0.15, 0.14, 0.2, 0.75)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -359,7 +379,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_igor_antenna")
 
 [node name="NameLabel" type="Label3D" parent="IgorFigure" unique_id=887001007]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.18)
-pixel_size = 0.0065
+pixel_size = 0.0072
 billboard = 1
 modulate = Color(0.98, 0.95, 0.55, 1)
 outline_modulate = Color(0.05, 0.05, 0.08, 0.92)
@@ -413,8 +433,8 @@ mesh = SubResource("BoxMesh_motorling_fin")
 surface_material_override/0 = SubResource("StandardMaterial3D_motorling_accent")
 
 [node name="MotorlingLabel" type="Label3D" parent="MotorlingPlaceholder" unique_id=990010009]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
-pixel_size = 0.006
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+pixel_size = 0.0069
 billboard = 1
 modulate = Color(1, 0.92, 0.65, 1)
 outline_modulate = Color(0.06, 0.05, 0.1, 0.9)
@@ -455,8 +475,8 @@ mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
 
 [node name="SlotLabel" type="Label3D" parent="Slots/SlotBase" unique_id=1544743259]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
-pixel_size = 0.006
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.41, 0)
+pixel_size = 0.0068
 billboard = 1
 modulate = Color(0.92, 1, 0.95, 1)
 outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
@@ -478,8 +498,8 @@ mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
 
 [node name="SlotLabel" type="Label3D" parent="Slots/SlotWheels" unique_id=689105756]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
-pixel_size = 0.006
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
+pixel_size = 0.0068
 billboard = 1
 modulate = Color(0.92, 1, 0.95, 1)
 outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
@@ -501,8 +521,8 @@ mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
 
 [node name="SlotLabel" type="Label3D" parent="Slots/SlotMotor" unique_id=1003082813]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
-pixel_size = 0.006
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, 0)
+pixel_size = 0.0068
 billboard = 1
 modulate = Color(0.92, 1, 0.95, 1)
 outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
@@ -524,8 +544,8 @@ mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
 
 [node name="SlotLabel" type="Label3D" parent="Slots/SlotBattery" unique_id=182995318]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
-pixel_size = 0.006
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+pixel_size = 0.0068
 billboard = 1
 modulate = Color(0.92, 1, 0.95, 1)
 outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
@@ -547,8 +567,8 @@ mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
 
 [node name="SlotLabel" type="Label3D" parent="Slots/SlotTool" unique_id=1435616211]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
-pixel_size = 0.0055
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.41, 0)
+pixel_size = 0.0064
 billboard = 1
 modulate = Color(0.92, 1, 0.95, 1)
 outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
@@ -600,8 +620,8 @@ mesh = SubResource("CylinderMesh_bolt")
 surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
 
 [node name="PartLabel" type="Label3D" parent="Parts/BasePart" unique_id=2121207635]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
-pixel_size = 0.0065
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43, 0)
+pixel_size = 0.0072
 billboard = 1
 modulate = Color(1, 0.98, 0.75, 1)
 outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
@@ -634,8 +654,8 @@ mesh = SubResource("SphereMesh_hubcap")
 surface_material_override/0 = SubResource("StandardMaterial3D_hubcap")
 
 [node name="PartLabel" type="Label3D" parent="Parts/WheelsPart" unique_id=2139199023]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
-pixel_size = 0.0065
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34, 0)
+pixel_size = 0.0072
 billboard = 1
 modulate = Color(0.9, 0.88, 1, 1)
 outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
@@ -666,8 +686,8 @@ mesh = SubResource("CylinderMesh_bolt")
 surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
 
 [node name="PartLabel" type="Label3D" parent="Parts/MotorPart" unique_id=532116122]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
-pixel_size = 0.0065
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.41, 0)
+pixel_size = 0.0072
 billboard = 1
 modulate = Color(0.82, 0.92, 1, 1)
 outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
@@ -704,8 +724,8 @@ mesh = SubResource("CylinderMesh_battery_terminal")
 surface_material_override/0 = SubResource("StandardMaterial3D_battery_terminal_black")
 
 [node name="PartLabel" type="Label3D" parent="Parts/BatteryPart" unique_id=728407247]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, 0)
-pixel_size = 0.0065
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39, 0)
+pixel_size = 0.0072
 billboard = 1
 modulate = Color(1, 0.9, 0.75, 1)
 outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
@@ -717,6 +737,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65, 0.2, 1.05)
 collision_mask = 0
 script = ExtResource("2_part")
 part_type = 4
+tool_type = "shovel"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Parts/ShovelPart" unique_id=1909152181]
 shape = SubResource("BoxShape3D_shovel")
@@ -737,12 +758,51 @@ mesh = SubResource("BoxMesh_shovel_arm")
 surface_material_override/0 = SubResource("StandardMaterial3D_dark_metal")
 
 [node name="PartLabel" type="Label3D" parent="Parts/ShovelPart" unique_id=1857910016]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44, 0)
-pixel_size = 0.0065
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46, 0)
+pixel_size = 0.0072
 billboard = 1
 modulate = Color(0.95, 0.95, 1, 1)
 outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
 text = "Pala"
+outline_size = 10
+
+[node name="CargoBedPart" type="StaticBody3D" parent="Parts"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65, 0.2, 1.05)
+collision_mask = 0
+script = ExtResource("2_part")
+part_type = 4
+tool_type = "cargo_bed"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parts/CargoBedPart"]
+shape = SubResource("BoxShape3D_cargo")
+
+[node name="Tray" type="MeshInstance3D" parent="Parts/CargoBedPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0)
+mesh = SubResource("BoxMesh_cargo_tray")
+surface_material_override/0 = SubResource("StandardMaterial3D_cargo_tray")
+
+[node name="RailL" type="MeshInstance3D" parent="Parts/CargoBedPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.04, 0)
+mesh = SubResource("BoxMesh_cargo_rail")
+surface_material_override/0 = SubResource("StandardMaterial3D_cargo_rail")
+
+[node name="RailR" type="MeshInstance3D" parent="Parts/CargoBedPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.04, 0)
+mesh = SubResource("BoxMesh_cargo_rail")
+surface_material_override/0 = SubResource("StandardMaterial3D_cargo_rail")
+
+[node name="BackRail" type="MeshInstance3D" parent="Parts/CargoBedPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, -0.16)
+mesh = SubResource("BoxMesh_cargo_back")
+surface_material_override/0 = SubResource("StandardMaterial3D_cargo_rail")
+
+[node name="PartLabel" type="Label3D" parent="Parts/CargoBedPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.41, 0)
+pixel_size = 0.0072
+billboard = 1
+modulate = Color(0.95, 0.95, 1, 1)
+outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
+text = "Caja"
 outline_size = 10
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=881073155]
@@ -751,10 +811,10 @@ outline_size = 10
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 16.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = -24.0
+offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -764,16 +824,16 @@ theme_override_constants/separation = 12
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.98, 0.95, 0.88, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 32
 text = "Taller I.G.O.R."
 
 [node name="IgorMessageLabel" type="Label" parent="CanvasLayer/UI" unique_id=1235896469]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 72)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.92, 0.9, 0.98, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 21
 text = "Mensaje de I.G.O.R."
 autowrap_mode = 3
 
@@ -782,25 +842,25 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.88, 0.98, 0.92, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "Misión: Despejar el primer camino"
 
 [node name="ButtonRow" type="HBoxContainer" parent="CanvasLayer/UI" unique_id=1286608618]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 14
 
 [node name="TestButton" type="Button" parent="CanvasLayer/UI/ButtonRow" unique_id=1237106787]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 48)
+custom_minimum_size = Vector2(228, 54)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Probar"
 
 [node name="ResetButton" type="Button" parent="CanvasLayer/UI/ButtonRow" unique_id=1286608619]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 48)
+custom_minimum_size = Vector2(228, 54)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Reiniciar"
@@ -828,6 +888,6 @@ offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.95, 0.93, 1, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 text = "Piezas: toca una pieza en la mesa y luego el hueco verde que le corresponde (base, ruedas, motor, batería, herramienta)."
 autowrap_mode = 3

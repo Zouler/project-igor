@@ -105,6 +105,62 @@ bottom_radius = 0.045
 height = 0.12
 radial_segments = 10
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_check"]
+albedo_color = Color(0.38, 0.92, 0.55, 1)
+roughness = 0.35
+emission_enabled = true
+emission = Color(0.45, 1, 0.62, 1)
+emission_energy_multiplier = 1.35
+
+[sub_resource type="BoxMesh" id="BoxMesh_check_leg"]
+size = Vector3(0.072, 0.02, 0.02)
+
+[sub_resource type="SphereMesh" id="SphereMesh_m2_orb"]
+radius = 0.095
+height = 0.19
+radial_segments = 14
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2_orb"]
+albedo_color = Color(1, 0.78, 0.32, 1)
+roughness = 0.36
+emission_enabled = true
+emission = Color(1, 0.62, 0.18, 1)
+emission_energy_multiplier = 1.65
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m3_tower_base"]
+albedo_color = Color(0.34, 0.36, 0.44, 1)
+roughness = 0.88
+metallic = 0.12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m3_tower_stem"]
+albedo_color = Color(0.38, 0.4, 0.48, 1)
+roughness = 0.86
+metallic = 0.08
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_m3_tower_base"]
+top_radius = 0.2
+bottom_radius = 0.24
+height = 0.1
+radial_segments = 16
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_m3_tower_stem"]
+top_radius = 0.055
+bottom_radius = 0.07
+height = 0.5
+radial_segments = 12
+
+[sub_resource type="SphereMesh" id="SphereMesh_m3_sleep_orb"]
+radius = 0.09
+height = 0.18
+radial_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m3_orb_sleep"]
+albedo_color = Color(0.42, 0.48, 0.62, 1)
+roughness = 0.55
+emission_enabled = true
+emission = Color(0.35, 0.42, 0.58, 1)
+emission_energy_multiplier = 0.11
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_active"]
 bg_color = Color(0.2, 0.17, 0.32, 0.9)
 border_width_left = 2
@@ -191,6 +247,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72, 0)
 mesh = SubResource("SphereMesh_m1_top")
 surface_material_override/0 = SubResource("StandardMaterial3D_m1_top")
 
+[node name="CompletedCheck" type="Node3D" parent="MissionMarkers/MissionMarkerFirstPath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.79, 0)
+visible = false
+
+[node name="CheckLegA" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerFirstPath/CompletedCheck"]
+transform = Transform3D(0.743145, -0.669131, 0, 0.669131, 0.743145, 0, 0, 0, 1, -0.022, -0.012, 0)
+mesh = SubResource("BoxMesh_check_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_check")
+
+[node name="CheckLegB" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerFirstPath/CompletedCheck"]
+transform = Transform3D(0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 0, 0, 1, 0.028, 0.016, 0)
+mesh = SubResource("BoxMesh_check_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_check")
+
 [node name="MissionMarkerSecondComingSoon" type="Node3D" parent="MissionMarkers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.88, 0.12, -0.42)
 
@@ -214,6 +284,63 @@ transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.62, 0.02)
 mesh = SubResource("CylinderMesh_lock_shackle")
 surface_material_override/0 = SubResource("StandardMaterial3D_lock")
 
+[node name="PinOrb" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerSecondComingSoon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56, 0)
+visible = false
+mesh = SubResource("SphereMesh_m2_orb")
+surface_material_override/0 = SubResource("StandardMaterial3D_m2_orb")
+
+[node name="CompletedCheck" type="Node3D" parent="MissionMarkers/MissionMarkerSecondComingSoon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66, 0)
+visible = false
+
+[node name="CheckLegA" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerSecondComingSoon/CompletedCheck"]
+transform = Transform3D(0.743145, -0.669131, 0, 0.669131, 0.743145, 0, 0, 0, 1, -0.02, -0.01, 0)
+mesh = SubResource("BoxMesh_check_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_check")
+
+[node name="CheckLegB" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerSecondComingSoon/CompletedCheck"]
+transform = Transform3D(0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 0, 0, 1, 0.026, 0.014, 0)
+mesh = SubResource("BoxMesh_check_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_check")
+
+[node name="MissionMarkerThird" type="Node3D" parent="MissionMarkers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.11, -0.82)
+
+[node name="TowerBase" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerThird"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("CylinderMesh_m3_tower_base")
+surface_material_override/0 = SubResource("StandardMaterial3D_m3_tower_base")
+
+[node name="TowerStem" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerThird"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+mesh = SubResource("CylinderMesh_m3_tower_stem")
+surface_material_override/0 = SubResource("StandardMaterial3D_m3_tower_stem")
+
+[node name="SleepingLightOrb" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerThird"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.69, 0)
+mesh = SubResource("SphereMesh_m3_sleep_orb")
+surface_material_override/0 = SubResource("StandardMaterial3D_m3_orb_sleep")
+
+[node name="LockBody" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerThird"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07, 0.4, 0.06)
+mesh = SubResource("BoxMesh_lock_body")
+surface_material_override/0 = SubResource("StandardMaterial3D_lock")
+
+[node name="LockShackle" type="MeshInstance3D" parent="MissionMarkers/MissionMarkerThird"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0.07, 0.5, 0.06)
+mesh = SubResource("CylinderMesh_lock_shackle")
+surface_material_override/0 = SubResource("StandardMaterial3D_lock")
+
+[node name="ZzzLabel" type="Label3D" parent="MissionMarkers/MissionMarkerThird"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.76, 0.05)
+text = "Zzz"
+pixel_size = 0.011
+modulate = Color(0.58, 0.62, 0.78, 0.82)
+outline_modulate = Color(0.06, 0.07, 0.1, 0.55)
+outline_size = 8
+billboard = 1
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UIRoot" type="Control" parent="CanvasLayer"]
@@ -230,9 +357,9 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 28.0
-offset_top = 20.0
+offset_top = 16.0
 offset_right = -28.0
-offset_bottom = 132.0
+offset_bottom = 168.0
 grow_horizontal = 2
 mouse_filter = 2
 
@@ -247,137 +374,210 @@ layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.98, 0.95, 1, 1)
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 34
 text = "Missions"
 
 [node name="IgorMessageLabel" type="Label" parent="CanvasLayer/UIRoot/TopPanel/TopVBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(480, 0)
+custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.94, 0.96, 1, 1)
-theme_override_font_sizes/font_size = 19
+theme_override_font_sizes/font_size = 21
 text = "Choose how to help the planet."
 autowrap_mode = 3
+
+[node name="PlanetProgressLabel" type="Label" parent="CanvasLayer/UIRoot/TopPanel/TopVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.78, 0.95, 0.88, 1)
+theme_override_font_sizes/font_size = 21
+text = "Planet progress: 0%"
 
 [node name="MissionCardsContainer" type="CenterContainer" parent="CanvasLayer/UIRoot"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 118.0
-offset_bottom = -76.0
+offset_top = 158.0
+offset_bottom = -78.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CardsRow" type="HBoxContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer"]
+[node name="CardsColumn" type="VBoxContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer"]
 layout_mode = 2
-theme_override_constants/separation = 24
+mouse_filter = 2
+theme_override_constants/separation = 14
 alignment = 1
 
-[node name="MissionCardFirst" type="PanelContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow"]
+[node name="CardsTopRow" type="HBoxContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="MissionCardFirst" type="PanelContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(308, 278)
+custom_minimum_size = Vector2(286, 268)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_card_active")
 
-[node name="Card1VBox" type="VBoxContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardFirst"]
+[node name="Card1VBox" type="VBoxContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardFirst"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="Mission1TitleLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardFirst/Card1VBox"]
+[node name="Mission1TitleLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardFirst/Card1VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.96, 0.82, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 23
 text = "Mission 1"
 
-[node name="Mission1DescriptionLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardFirst/Card1VBox"]
+[node name="Mission1DescriptionLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardFirst/Card1VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(260, 0)
+custom_minimum_size = Vector2(248, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.93, 0.95, 1, 1)
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 18
 text = "Description"
 autowrap_mode = 3
 
-[node name="Mission1StatusLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardFirst/Card1VBox"]
+[node name="Mission1StatusLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardFirst/Card1VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.65, 1, 0.82, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 19
 text = "Available"
 
-[node name="PlayMissionButton" type="Button" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardFirst/Card1VBox"]
+[node name="PlayMissionButton" type="Button" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardFirst/Card1VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 48)
+custom_minimum_size = Vector2(228, 54)
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "Start mission"
 
-[node name="MissionCardSecond" type="PanelContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow"]
+[node name="MissionCardSecond" type="PanelContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(308, 278)
+custom_minimum_size = Vector2(286, 268)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_card_locked")
 
-[node name="Card2VBox" type="VBoxContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardSecond"]
+[node name="Card2VBox" type="VBoxContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardSecond"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="Mission2TitleLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardSecond/Card2VBox"]
+[node name="Mission2TitleLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardSecond/Card2VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.72, 0.74, 0.82, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 23
 text = "Mission 2"
 
-[node name="Mission2DescriptionLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardSecond/Card2VBox"]
+[node name="Mission2DescriptionLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardSecond/Card2VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(260, 0)
+custom_minimum_size = Vector2(248, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.65, 0.68, 0.76, 1)
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 18
 text = "Soon"
 autowrap_mode = 3
 
-[node name="Mission2StatusLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardSecond/Card2VBox"]
+[node name="Mission2StatusLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardSecond/Card2VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.62, 0.64, 0.74, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 19
 text = "Coming soon"
 
-[node name="LockedButton" type="Button" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsRow/MissionCardSecond/Card2VBox"]
+[node name="LockedButton" type="Button" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsTopRow/MissionCardSecond/Card2VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 48)
+custom_minimum_size = Vector2(228, 54)
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_colors/font_color = Color(0.72, 0.74, 0.82, 1)
+theme_override_font_sizes/font_size = 20
+text = "Locked"
+
+[node name="CardsBottomRow" type="HBoxContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="MissionCardThird" type="PanelContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsBottomRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(286, 268)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_locked")
+
+[node name="Card3VBox" type="VBoxContainer" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsBottomRow/MissionCardThird"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Mission3TitleLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsBottomRow/MissionCardThird/Card3VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.72, 0.74, 0.82, 1)
+theme_override_font_sizes/font_size = 23
+text = "Mission 3"
+
+[node name="Mission3DescriptionLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsBottomRow/MissionCardThird/Card3VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(248, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.65, 0.68, 0.76, 1)
 theme_override_font_sizes/font_size = 18
+text = "Soon"
+autowrap_mode = 3
+
+[node name="Mission3StatusLabel" type="Label" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsBottomRow/MissionCardThird/Card3VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.62, 0.64, 0.74, 1)
+theme_override_font_sizes/font_size = 19
+text = "Coming soon"
+
+[node name="Mission3LockedButton" type="Button" parent="CanvasLayer/UIRoot/MissionCardsContainer/CardsColumn/CardsBottomRow/MissionCardThird/Card3VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(228, 54)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.72, 0.74, 0.82, 1)
+theme_override_font_sizes/font_size = 20
 text = "Locked"
 
 [node name="BottomBar" type="MarginContainer" parent="CanvasLayer/UIRoot"]
@@ -399,8 +599,8 @@ alignment = 1
 
 [node name="BackButton" type="Button" parent="CanvasLayer/UIRoot/BottomBar/BackHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 50)
+custom_minimum_size = Vector2(228, 54)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "Back"

@@ -95,10 +95,10 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-content_margin_left = 14
-content_margin_top = 12
-content_margin_right = 14
-content_margin_bottom = 12
+content_margin_left = 16
+content_margin_top = 14
+content_margin_right = 16
+content_margin_bottom = 14
 
 [node name="StartScreen" type="Node3D"]
 script = ExtResource("1_startscreen")
@@ -203,32 +203,32 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 16.0
-offset_right = -20.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 12
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/UI"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.14, 0.12, 0.18, 1)
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 40
 text = "Proyecto I.G.O.R."
 
 [node name="SubtitleLabel" type="Label" parent="CanvasLayer/UI"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.18, 0.16, 0.22, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 22
 text = "Inventive Guide Operating Robot"
 
 [node name="ButtonPanel" type="Panel" parent="CanvasLayer/UI"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_start")
 
@@ -248,23 +248,23 @@ theme_override_constants/separation = 10
 
 [node name="StartButton" type="Button" parent="CanvasLayer/UI/ButtonPanel/Buttons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(240, 52)
+custom_minimum_size = Vector2(240, 54)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Empezar"
 
 [node name="ContinueButton" type="Button" parent="CanvasLayer/UI/ButtonPanel/Buttons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(240, 52)
+custom_minimum_size = Vector2(240, 54)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Continuar"
 
 [node name="SettingsButton" type="Button" parent="CanvasLayer/UI/ButtonPanel/Buttons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(240, 48)
+custom_minimum_size = Vector2(240, 54)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "Settings"
 
 [node name="Spacer" type="Control" parent="CanvasLayer/UI"]
@@ -277,15 +277,16 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.16, 0.14, 0.2, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 18
 text = "Construí máquinas. Ayudá al planeta."
 
 [node name="SettingsPanel" type="Panel" parent="CanvasLayer/UI"]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
 mouse_filter = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_start")
+custom_minimum_size = Vector2(420, 0)
 
 [node name="SettingsContent" type="VBoxContainer" parent="CanvasLayer/UI/SettingsPanel"]
 layout_mode = 1
@@ -299,54 +300,54 @@ offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 12
 
 [node name="SettingsTitleLabel" type="Label" parent="CanvasLayer/UI/SettingsPanel/SettingsContent"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "Settings"
 
 [node name="LanguageRow" type="HBoxContainer" parent="CanvasLayer/UI/SettingsPanel/SettingsContent"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 12
 
 [node name="LanguageLabel" type="Label" parent="CanvasLayer/UI/SettingsPanel/SettingsContent/LanguageRow"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 18
 text = "Language"
 
 [node name="LanguageEnglishButton" type="Button" parent="CanvasLayer/UI/SettingsPanel/SettingsContent/LanguageRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(110, 36)
+custom_minimum_size = Vector2(124, 42)
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 17
 text = "English"
 
 [node name="LanguageSpanishButton" type="Button" parent="CanvasLayer/UI/SettingsPanel/SettingsContent/LanguageRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(110, 36)
+custom_minimum_size = Vector2(124, 42)
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 17
 text = "Español"
 
 [node name="ResetDemoButton" type="Button" parent="CanvasLayer/UI/SettingsPanel/SettingsContent"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(240, 48)
+custom_minimum_size = Vector2(240, 54)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 19
 text = "Reiniciar demo"
 
 [node name="CloseSettingsButton" type="Button" parent="CanvasLayer/UI/SettingsPanel/SettingsContent"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(240, 48)
+custom_minimum_size = Vector2(240, 54)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 19
 text = "Close"
 

@@ -4,6 +4,7 @@ extends Node3D
 
 const LocalizationScript := preload("res://scripts/localization.gd")
 const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
+const UIStyle := preload("res://scripts/ui_style_helper.gd")
 
 const DEBUG_LOGS := false
 
@@ -33,6 +34,8 @@ func _ready() -> void:
 	_setup_camera()
 	_apply_button_feedback(_next_button)
 	_apply_button_feedback(_skip_button)
+	UIStyle.apply_primary_button(_next_button)
+	UIStyle.apply_compact_button(_skip_button, 20)
 	_next_button.pressed.connect(_on_next_pressed)
 	_skip_button.pressed.connect(_on_skip_pressed)
 	_play_idle_anims()
@@ -43,8 +46,8 @@ func _setup_camera() -> void:
 	var cam := $Camera3D as Camera3D
 	cam.current = true
 	cam.fov = 52.0
-	cam.position = Vector3(5.4, 3.2, 6.4)
-	cam.look_at(Vector3(0.0, 0.8, 0.0), Vector3.UP)
+	cam.position = Vector3(5.35, 3.22, 6.45)
+	cam.look_at(Vector3(0.15, 0.62, 0.15), Vector3.UP)
 
 
 func _apply_button_feedback(b: Button) -> void:

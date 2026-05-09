@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://bjj6fynee2xrk"]
+[gd_scene format=3 uid="uid://3g7nto4nb2b5"]
 
-[ext_resource type="Script" path="res://scripts/test_zone.gd" id="1_testzone"]
+[ext_resource type="Script" path="res://scripts/test_zone_blocks.gd" id="1_testblocks"]
 
 [sub_resource type="Environment" id="Environment_tz"]
 background_mode = 1
@@ -126,11 +126,56 @@ content_margin_top = 10
 content_margin_right = 12
 content_margin_bottom = 10
 
-[node name="TestZone" type="Node3D"]
-script = ExtResource("1_testzone")
+[sub_resource type="BoxMesh" id="BoxMesh_block_crate"]
+size = Vector3(0.16, 0.14, 0.16)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_block_crate"]
+albedo_color = Color(0.88, 0.62, 0.38, 1)
+roughness = 0.65
+
+[sub_resource type="BoxMesh" id="BoxMesh_cargo_tray_tz"]
+size = Vector3(0.4, 0.045, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cargo_tray_tz"]
+albedo_color = Color(0.55, 0.4, 0.28, 1)
+roughness = 0.55
+
+[sub_resource type="BoxMesh" id="BoxMesh_cargo_rail_tz"]
+size = Vector3(0.028, 0.075, 0.28)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cargo_rail_tz"]
+albedo_color = Color(0.72, 0.52, 0.36, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pickup_pad"]
+albedo_color = Color(0.94, 0.88, 0.42, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_pickup_pad"]
+size = Vector3(2.4, 0.02, 1.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_delivery_pad"]
+albedo_color = Color(0.32, 0.72, 0.48, 1)
+roughness = 0.55
+emission_enabled = true
+emission = Color(0.25, 0.55, 0.38, 1)
+emission_energy_multiplier = 0.28
+
+[sub_resource type="BoxMesh" id="BoxMesh_delivery_pad"]
+size = Vector3(1.35, 0.025, 0.82)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_stack_marker"]
+albedo_color = Color(0.95, 0.95, 1, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_stack_marker"]
+size = Vector3(0.2, 0.02, 0.2)
+
+[node name="TestZoneBlocks" type="Node3D"]
+script = ExtResource("1_testblocks")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 4.5, 3.2, 5.8)
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 4.55, 3.25, 5.95)
 fov = 50.0
 current = true
 
@@ -241,6 +286,35 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.04, 0.06, 0)
 mesh = SubResource("CylinderMesh_shovel_h")
 surface_material_override/0 = SubResource("StandardMaterial3D_shovel")
 
+[node name="CargoBed" type="Node3D" parent="Machine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0.14, 0.08)
+visible = false
+
+[node name="Tray" type="MeshInstance3D" parent="Machine/CargoBed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_cargo_tray_tz")
+surface_material_override/0 = SubResource("StandardMaterial3D_cargo_tray_tz")
+
+[node name="RailL" type="MeshInstance3D" parent="Machine/CargoBed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.185, 0.048, 0)
+mesh = SubResource("BoxMesh_cargo_rail_tz")
+surface_material_override/0 = SubResource("StandardMaterial3D_cargo_rail_tz")
+
+[node name="RailR" type="MeshInstance3D" parent="Machine/CargoBed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.185, 0.048, 0)
+mesh = SubResource("BoxMesh_cargo_rail_tz")
+surface_material_override/0 = SubResource("StandardMaterial3D_cargo_rail_tz")
+
+[node name="BackRail" type="MeshInstance3D" parent="Machine/CargoBed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.048, -0.145)
+mesh = SubResource("BoxMesh_cargo_rail_tz")
+surface_material_override/0 = SubResource("StandardMaterial3D_cargo_rail_tz")
+
+[node name="FrontRail" type="MeshInstance3D" parent="Machine/CargoBed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.048, 0.148)
+mesh = SubResource("BoxMesh_cargo_rail_tz")
+surface_material_override/0 = SubResource("StandardMaterial3D_cargo_rail_tz")
+
 [node name="MotorlingCore" type="MeshInstance3D" parent="Machine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, 0.04)
 mesh = SubResource("SphereMesh_core")
@@ -255,22 +329,55 @@ outline_modulate = Color(0.06, 0.06, 0.1, 0.88)
 text = "Motorcito Ayudante"
 outline_size = 8
 
-[node name="Rocks" type="Node3D" parent="."]
+[node name="PickupArea" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.38)
 
-[node name="Rock1" type="MeshInstance3D" parent="Rocks"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, -0.38)
-mesh = SubResource("SphereMesh_rock")
-surface_material_override/0 = SubResource("StandardMaterial3D_rock")
+[node name="PickupPad" type="MeshInstance3D" parent="PickupArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("BoxMesh_pickup_pad")
+surface_material_override/0 = SubResource("StandardMaterial3D_pickup_pad")
 
-[node name="Rock2" type="MeshInstance3D" parent="Rocks"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0.48)
-mesh = SubResource("SphereMesh_rock")
-surface_material_override/0 = SubResource("StandardMaterial3D_rock")
+[node name="Blocks" type="Node3D" parent="PickupArea"]
 
-[node name="Rock3" type="MeshInstance3D" parent="Rocks"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 1.18)
-mesh = SubResource("SphereMesh_rock")
-surface_material_override/0 = SubResource("StandardMaterial3D_rock")
+[node name="Block1" type="MeshInstance3D" parent="PickupArea/Blocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.09, 0)
+mesh = SubResource("BoxMesh_block_crate")
+surface_material_override/0 = SubResource("StandardMaterial3D_block_crate")
+
+[node name="Block2" type="MeshInstance3D" parent="PickupArea/Blocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("BoxMesh_block_crate")
+surface_material_override/0 = SubResource("StandardMaterial3D_block_crate")
+
+[node name="Block3" type="MeshInstance3D" parent="PickupArea/Blocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.09, 0)
+mesh = SubResource("BoxMesh_block_crate")
+surface_material_override/0 = SubResource("StandardMaterial3D_block_crate")
+
+[node name="DeliveryZone" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.05)
+
+[node name="DeliveryPad" type="MeshInstance3D" parent="DeliveryZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, 0)
+mesh = SubResource("BoxMesh_delivery_pad")
+surface_material_override/0 = SubResource("StandardMaterial3D_delivery_pad")
+
+[node name="Stack1" type="MeshInstance3D" parent="DeliveryZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26, 0.025, 0)
+mesh = SubResource("BoxMesh_stack_marker")
+surface_material_override/0 = SubResource("StandardMaterial3D_stack_marker")
+
+[node name="Stack2" type="MeshInstance3D" parent="DeliveryZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0)
+mesh = SubResource("BoxMesh_stack_marker")
+surface_material_override/0 = SubResource("StandardMaterial3D_stack_marker")
+
+[node name="Stack3" type="MeshInstance3D" parent="DeliveryZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26, 0.025, 0)
+mesh = SubResource("BoxMesh_stack_marker")
+surface_material_override/0 = SubResource("StandardMaterial3D_stack_marker")
+
+[node name="DeliveredBlocksRoot" type="Node3D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -305,6 +412,14 @@ theme_override_colors/font_color = Color(0.92, 0.95, 1, 1)
 theme_override_font_sizes/font_size = 21
 text = "Probemos la nueva máquina."
 autowrap_mode = 3
+
+[node name="BlocksProgressLabel" type="Label" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.82, 0.96, 0.88, 1)
+theme_override_font_sizes/font_size = 22
+text = "Bloques entregados: 0/3"
 
 [node name="ButtonRow" type="HBoxContainer" parent="CanvasLayer/UI"]
 layout_mode = 2

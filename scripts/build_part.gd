@@ -3,13 +3,15 @@ extends StaticBody3D
 ## Pieza colocable del taller. Click / toque para seleccionarla (si aún no está colocada).
 ## Orden del enum: BASE, WHEELS, MOTOR, BATTERY, TOOL (coincide con los slots en la escena).
 
-const DBG_PICK := false ## Poné en true para ver logs de picking (prefijo [IGOR pick]).
+const DEBUG_LOGS := false ## Logs de picking ([IGOR pick]); normalmente apagado.
 
 const HIGHLIGHT_SCALE := 1.15
 const BOB_AMPLITUDE := 0.055
 const BOB_HALF_PERIOD := 0.38
 
 @export_enum("BASE", "WHEELS", "MOTOR", "BATTERY", "TOOL") var part_type: int = 0
+## Para piezas TOOL: "shovel", "cargo_bed", etc. Vacío en piezas que no son herramienta.
+@export var tool_type: String = ""
 
 signal part_clicked(part: Node)
 
@@ -112,12 +114,12 @@ func _input_event(
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
 		if mb.button_index == MOUSE_BUTTON_LEFT and mb.pressed:
-			if DBG_PICK:
+			if DEBUG_LOGS:
 				print("[IGOR pick] Part clicked: ", name)
 			part_clicked.emit(self)
 	elif event is InputEventScreenTouch:
 		var st := event as InputEventScreenTouch
 		if st.pressed:
-			if DBG_PICK:
+			if DEBUG_LOGS:
 				print("[IGOR pick] Part clicked: ", name)
 			part_clicked.emit(self)

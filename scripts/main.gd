@@ -1,7 +1,10 @@
 extends Node
 
+const DEBUG_LOGS := false
+
 func _ready() -> void:
-	print("Proyecto I.G.O.R. iniciado")
+	if DEBUG_LOGS:
+		print("Proyecto I.G.O.R. iniciado")
 	call_deferred("_go_to_start_screen")
 
 func _go_to_start_screen() -> void:

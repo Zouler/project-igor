@@ -32,7 +32,7 @@ func _on_scene_changed() -> void:
 
 
 func fade_in() -> void:
-	if _rect == null:
+	if _rect == null or not is_instance_valid(_rect):
 		return
 	_rect.visible = true
 	_is_fading = true
@@ -40,11 +40,16 @@ func fade_in() -> void:
 	tw.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_property(_rect, "color:a", 0.0, _duration)
 	await tw.finished
+	if _rect == null or not is_instance_valid(_rect):
+		_is_fading = false
+		return
 	_is_fading = false
 	_rect.visible = false
 
 
 func fade_to_scene(scene_path: String) -> void:
+	if _rect == null or not is_instance_valid(_rect):
+		return
 	if _is_fading:
 		return
 	if DEBUG_LOGS:
@@ -58,7 +63,18 @@ func fade_to_scene(scene_path: String) -> void:
 	tw.tween_property(_rect, "color:a", 1.0, _duration)
 	await tw.finished
 
+	if not is_inside_tree():
+		_is_fading = false
+		return
+	var tree := get_tree()
+	if tree == null:
+		_is_fading = false
+		return
+	if _rect == null or not is_instance_valid(_rect):
+		_is_fading = false
+		return
+
 	# Cambiamos escena y el fade_in lo hace el handler de current_scene_changed.
-	get_tree().change_scene_to_file(scene_path)
+	tree.change_scene_to_file(scene_path)
 	_is_fading = false
 

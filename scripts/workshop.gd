@@ -6,10 +6,9 @@ const BuildStateScript := preload("res://scripts/build_state.gd")
 const MissionStateScript := preload("res://scripts/mission_state.gd")
 const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
 const LocalizationScript := preload("res://scripts/localization.gd")
+const UIStyle := preload("res://scripts/ui_style_helper.gd")
 
-const DEBUG_LOGS := false
-
-const DBG_WORKSHOP := false ## Poné en true para ver señales (prefijo [IGOR workshop]).
+const DEBUG_LOGS := false ## Incluye logs [IGOR workshop] de selección; normalmente apagado.
 
 ## Coincide con el primer valor de @export_enum en build_slot.gd (BASE).
 const SLOT_TYPE_BASE := 0
@@ -61,6 +60,7 @@ var _tutorial_pointer_move_tween: Tween = null
 
 var _placing_tween: Tween = null
 var _reset_tween: Tween = null
+var _tutorial_pointer_bob_tween: Tween = null
 
 
 func _ready() -> void:
@@ -73,13 +73,14 @@ func _ready() -> void:
 	_title_label.text = _loc.t("WORKSHOP_TITLE")
 	_test_button.text = _loc.t("WORKSHOP_BUTTON_TEST")
 	_reset_button.text = _loc.t("WORKSHOP_BUTTON_RESET")
-	_mission_label.text = _loc.t("WORKSHOP_MISSION_LABEL")
+	_update_mission_title_label()
 	_set_workshop_labels()
 	set_igor_message(_loc.t("WORKSHOP_MOTORLING_INTRO"))
 
 	if not _mission_state.mission_started:
 		_mission_state.start_first_mission()
-	# MissionLabel ya está localizado arriba.
+	_loc.locale_changed.connect(_on_locale_changed_workshop)
+	_apply_mission_tool_parts_visibility()
 
 	_validation_slots = [
 		$Slots/SlotBase,
@@ -102,10 +103,35 @@ func _ready() -> void:
 	_reset_button.pressed.connect(_on_reset_pressed)
 	_apply_button_feedback(_test_button)
 	_apply_button_feedback(_reset_button)
+	UIStyle.apply_primary_button(_test_button)
+	UIStyle.apply_primary_button(_reset_button)
 
 	_setup_tutorial_pointer()
 	_set_tutorial_step(STEP_SELECT_BASE)
 	_sync_tutorial_step_from_slots()
+
+
+func _exit_tree() -> void:
+	if _loc != null and _loc.locale_changed.is_connected(_on_locale_changed_workshop):
+		_loc.locale_changed.disconnect(_on_locale_changed_workshop)
+	if _tutorial_part_tween != null and _tutorial_part_tween.is_valid():
+		_tutorial_part_tween.kill()
+	_tutorial_part_tween = null
+	if _tutorial_slot_tween != null and _tutorial_slot_tween.is_valid():
+		_tutorial_slot_tween.kill()
+	_tutorial_slot_tween = null
+	if _tutorial_pointer_move_tween != null and _tutorial_pointer_move_tween.is_valid():
+		_tutorial_pointer_move_tween.kill()
+	_tutorial_pointer_move_tween = null
+	if _tutorial_pointer_bob_tween != null and _tutorial_pointer_bob_tween.is_valid():
+		_tutorial_pointer_bob_tween.kill()
+	_tutorial_pointer_bob_tween = null
+	if _placing_tween != null and _placing_tween.is_valid():
+		_placing_tween.kill()
+	_placing_tween = null
+	if _reset_tween != null and _reset_tween.is_valid():
+		_reset_tween.kill()
+	_reset_tween = null
 
 
 func _setup_camera() -> void:
@@ -113,12 +139,43 @@ func _setup_camera() -> void:
 	cam.current = true
 	# Encuadre más amplio: mesa, huecos y piezas visibles sin que la UI tape el centro.
 	cam.fov = 52.0
-	cam.position = Vector3(0.15, 3.45, 8.35)
-	cam.look_at(Vector3(0.0, 0.12, -0.08), Vector3.UP)
+	cam.position = Vector3(0.12, 3.48, 8.5)
+	cam.look_at(Vector3(0.0, 0.11, -0.06), Vector3.UP)
 
 
 func set_igor_message(text: String) -> void:
 	_igor_label.text = text
+
+
+func _on_locale_changed_workshop() -> void:
+	_title_label.text = _loc.t("WORKSHOP_TITLE")
+	_test_button.text = _loc.t("WORKSHOP_BUTTON_TEST")
+	_reset_button.text = _loc.t("WORKSHOP_BUTTON_RESET")
+	_update_mission_title_label()
+	_set_workshop_labels()
+	set_igor_message(_get_tutorial_message_for_step(_tutorial_step))
+
+
+func _update_mission_title_label() -> void:
+	if _mission_state.current_mission_id == "carry_first_blocks":
+		_mission_label.text = _loc.t("WORKSHOP_MISSION_LABEL_M2")
+	else:
+		_mission_label.text = _loc.t("WORKSHOP_MISSION_LABEL")
+
+
+func _apply_mission_tool_parts_visibility() -> void:
+	var shovel := $Parts/ShovelPart as StaticBody3D
+	var cargo := $Parts/CargoBedPart as StaticBody3D
+	if _mission_state.current_mission_id == "carry_first_blocks":
+		shovel.visible = false
+		shovel.input_ray_pickable = false
+		cargo.visible = true
+		cargo.input_ray_pickable = true
+	else:
+		shovel.visible = true
+		shovel.input_ray_pickable = true
+		cargo.visible = false
+		cargo.input_ray_pickable = false
 
 
 func _setup_tutorial_pointer() -> void:
@@ -135,18 +192,20 @@ func _setup_tutorial_pointer() -> void:
 
 	var arrow := Label3D.new()
 	arrow.text = "↓"
-	arrow.pixel_size = 0.007
+	arrow.pixel_size = 0.0085
 	arrow.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	arrow.modulate = Color(1, 0.97, 0.78, 1)
 	arrow.outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
 	arrow.outline_size = 10
 	_tutorial_pointer_base.add_child(arrow)
 
-	var tw := create_tween()
-	tw.set_loops()
-	tw.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tw.tween_property(_tutorial_pointer_base, "position:y", 0.14, 0.6)
-	tw.tween_property(_tutorial_pointer_base, "position:y", 0.0, 0.6)
+	if _tutorial_pointer_bob_tween != null and _tutorial_pointer_bob_tween.is_valid():
+		_tutorial_pointer_bob_tween.kill()
+	_tutorial_pointer_bob_tween = create_tween()
+	_tutorial_pointer_bob_tween.set_loops()
+	_tutorial_pointer_bob_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_tutorial_pointer_bob_tween.tween_property(_tutorial_pointer_base, "position:y", 0.14, 0.6)
+	_tutorial_pointer_bob_tween.tween_property(_tutorial_pointer_base, "position:y", 0.0, 0.6)
 
 
 func _set_tutorial_step(step: int) -> void:
@@ -174,8 +233,12 @@ func _get_tutorial_message_for_step(step: int) -> String:
 		STEP_PLACE_BATTERY:
 			return _loc.t("WORKSHOP_PLACE_BATTERY")
 		STEP_SELECT_TOOL:
+			if _mission_state.current_mission_id == "carry_first_blocks":
+				return _loc.t("WORKSHOP_SELECT_CARGO")
 			return _loc.t("WORKSHOP_SELECT_TOOL")
 		STEP_PLACE_TOOL:
+			if _mission_state.current_mission_id == "carry_first_blocks":
+				return _loc.t("WORKSHOP_PLACE_CARGO")
 			return _loc.t("WORKSHOP_PLACE_TOOL")
 		STEP_PRESS_TEST:
 			return _loc.t("WORKSHOP_PRESS_TEST")
@@ -192,6 +255,7 @@ func _set_workshop_labels() -> void:
 	($Parts/MotorPart/PartLabel as Label3D).text = _loc.t("PART_MOTOR")
 	($Parts/BatteryPart/PartLabel as Label3D).text = _loc.t("PART_BATTERY")
 	($Parts/ShovelPart/PartLabel as Label3D).text = _loc.t("PART_SHOVEL")
+	($Parts/CargoBedPart/PartLabel as Label3D).text = _loc.t("PART_CARGO_BED")
 	# Slot labels
 	($Slots/SlotBase/SlotLabel as Label3D).text = _loc.t("SLOT_BASE")
 	($Slots/SlotWheels/SlotLabel as Label3D).text = _loc.t("SLOT_WHEELS")
@@ -265,7 +329,7 @@ func _clear_tutorial_highlights() -> void:
 	if _tutorial_pointer_move_tween != null:
 		_tutorial_pointer_move_tween.kill()
 		_tutorial_pointer_move_tween = null
-	if _tutorial_pointer != null:
+	if is_instance_valid(_tutorial_pointer):
 		_tutorial_pointer.visible = false
 
 
@@ -273,7 +337,7 @@ func _update_tutorial_highlights() -> void:
 	_clear_tutorial_highlights()
 
 	var target_part := _get_part_for_step(_tutorial_step)
-	if target_part != null and target_part is Node3D and not target_part.is_placed:
+	if is_instance_valid(target_part) and target_part is Node3D and not target_part.is_placed:
 		var p3 := target_part as Node3D
 		var base_scale := p3.scale
 		_tutorial_part_tween = create_tween().set_loops()
@@ -284,9 +348,9 @@ func _update_tutorial_highlights() -> void:
 		return
 
 	var target_slot := _get_slot_for_step(_tutorial_step)
-	if target_slot != null:
+	if is_instance_valid(target_slot):
 		var marker := target_slot.get_node_or_null("Marker") as Node3D
-		if marker != null:
+		if is_instance_valid(marker):
 			var base_scale_s := marker.scale
 			_tutorial_slot_tween = create_tween().set_loops()
 			_tutorial_slot_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
@@ -297,7 +361,7 @@ func _update_tutorial_highlights() -> void:
 
 
 func _set_pointer_to_world(world_pos: Vector3) -> void:
-	if _tutorial_pointer == null:
+	if not is_instance_valid(_tutorial_pointer):
 		return
 	_tutorial_pointer.visible = true
 	if _tutorial_pointer_move_tween != null:
@@ -314,10 +378,12 @@ func _set_pointer_to_world(world_pos: Vector3) -> void:
 
 func _apply_button_feedback(b: Button) -> void:
 	b.button_down.connect(func() -> void:
-		b.scale = Vector2(0.98, 0.98)
+		if is_instance_valid(b):
+			b.scale = Vector2(0.98, 0.98)
 	)
 	b.button_up.connect(func() -> void:
-		b.scale = Vector2.ONE
+		if is_instance_valid(b):
+			b.scale = Vector2.ONE
 	)
 
 
@@ -332,6 +398,8 @@ func _get_part_for_step(step: int) -> Node:
 		STEP_SELECT_BATTERY:
 			return $Parts/BatteryPart
 		STEP_SELECT_TOOL:
+			if _mission_state.current_mission_id == "carry_first_blocks":
+				return $Parts/CargoBedPart
 			return $Parts/ShovelPart
 		_:
 			return null
@@ -360,7 +428,7 @@ func _clear_selection_visual() -> void:
 
 
 func _on_part_clicked(part: Node) -> void:
-	if DBG_WORKSHOP:
+	if DEBUG_LOGS:
 		print("[IGOR workshop] part_selected -> ", part.name)
 	if part.is_placed:
 		return
@@ -383,7 +451,7 @@ func _on_part_clicked(part: Node) -> void:
 
 
 func _on_slot_clicked(slot: Node) -> void:
-	if DBG_WORKSHOP:
+	if DEBUG_LOGS:
 		print("[IGOR workshop] slot_selected -> ", slot.name)
 	if _selected_part == null:
 		_sync_tutorial_step_from_slots()
@@ -436,38 +504,58 @@ func _on_slot_clicked(slot: Node) -> void:
 		set_igor_message(_loc.t("WORKSHOP_MOTORLING_FOUND_BASE"))
 		_sync_tutorial_step_from_slots()
 	else:
-		set_igor_message(_loc.t("WORKSHOP_PART_PLACED"))
+		if int(slot.slot_type) == SLOT_TYPE_TOOL and _mission_state.current_mission_id == "carry_first_blocks":
+			set_igor_message(_loc.t("WORKSHOP_CARGO_PLACED"))
+		else:
+			set_igor_message(_loc.t("WORKSHOP_PART_PLACED"))
 		_sync_tutorial_step_from_slots()
 
 
 func _on_test_pressed() -> void:
 	var msg: String = _igor_guide.validate_build(_validation_slots)
+	var complete: bool = _igor_guide.is_build_complete(_validation_slots)
 	set_igor_message(msg)
-	if not _igor_guide.is_build_complete(_validation_slots):
-		# Antes de llegar a STEP_PRESS_TEST, si aprietan Probar, mostramos la pista corta del siguiente paso.
+	if not complete:
 		_sync_tutorial_step_from_slots()
 		return
 	if _test_zone_transition_scheduled:
 		return
 	_test_zone_transition_scheduled = true
 	_build_state.set_from_workshop(_validation_slots)
-	_mission_state.mark_machine_built()
 	if DEBUG_LOGS:
-		print("MissionState: machine built")
+		print("Workshop: test OK, mission=", _mission_state.current_mission_id, " tool_type=", _build_state.tool_type)
+	if _mission_state.current_mission_id == "carry_first_blocks":
+		_mission_state.mark_second_machine_built()
+	else:
+		_mission_state.mark_machine_built()
 	var motorling := get_node_or_null("MotorlingPlaceholder")
 	if motorling != null and motorling.has_method("success_pulse"):
 		motorling.success_pulse()
 	_pulse_placed_parts_happy()
-	get_tree().create_timer(1.2).timeout.connect(_go_to_test_zone)
+	get_tree().create_timer(1.2).timeout.connect(_on_test_zone_delay_elapsed, CONNECT_ONE_SHOT)
+
+
+func _on_test_zone_delay_elapsed() -> void:
+	if not is_instance_valid(self) or not is_inside_tree():
+		return
+	_go_to_test_zone()
 
 
 func _go_to_test_zone() -> void:
 	_test_zone_transition_scheduled = false
-	if not is_inside_tree():
+	if not is_instance_valid(self) or not is_inside_tree():
 		return
 	if not _igor_guide.is_build_complete(_validation_slots):
+		var retry_msg: String = _igor_guide.validate_build(_validation_slots)
+		set_igor_message(retry_msg)
+		if DEBUG_LOGS:
+			print("Workshop: deferred transition skipped — ", retry_msg)
 		return
-	_scene_transition.fade_to_scene("res://scenes/test_zone.tscn")
+	var path := "res://scenes/test_zone_blocks.tscn" if _mission_state.current_mission_id == "carry_first_blocks" else "res://scenes/test_zone.tscn"
+	if DEBUG_LOGS:
+		print("Workshop: fade to ", path)
+	if is_instance_valid(_scene_transition):
+		_scene_transition.fade_to_scene(path)
 
 
 func _pulse_placed_parts_happy() -> void:
@@ -486,6 +574,7 @@ func _on_reset_pressed() -> void:
 	_test_zone_transition_scheduled = false
 	_build_state.reset()
 	set_igor_message(_loc.t("WORKSHOP_SELECT_BASE"))
+	_apply_mission_tool_parts_visibility()
 	_set_tutorial_step(STEP_SELECT_BASE)
 	_clear_selection_visual()
 

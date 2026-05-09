@@ -2,7 +2,7 @@ extends StaticBody3D
 
 ## Hueco en la plataforma. Click / toque después de elegir una pieza para intentar colocarla.
 
-const DBG_PICK := false ## Poné en true para ver logs de picking (prefijo [IGOR pick]).
+const DEBUG_LOGS := false ## Logs de picking ([IGOR pick]); normalmente apagado.
 
 @export_enum("BASE", "WHEELS", "MOTOR", "BATTERY", "TOOL") var slot_type: int = 0
 
@@ -63,12 +63,12 @@ func _input_event(
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
 		if mb.button_index == MOUSE_BUTTON_LEFT and mb.pressed:
-			if DBG_PICK:
+			if DEBUG_LOGS:
 				print("[IGOR pick] Slot clicked: ", name)
 			slot_clicked.emit(self)
 	elif event is InputEventScreenTouch:
 		var st := event as InputEventScreenTouch
 		if st.pressed:
-			if DBG_PICK:
+			if DEBUG_LOGS:
 				print("[IGOR pick] Slot clicked: ", name)
 			slot_clicked.emit(self)

@@ -7,6 +7,7 @@ const MissionStateScript := preload("res://scripts/mission_state.gd")
 const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
 const LocalizationScript := preload("res://scripts/localization.gd")
 const SaveManagerScript := preload("res://scripts/save_manager.gd")
+const UIStyle := preload("res://scripts/ui_style_helper.gd")
 
 const DEBUG_LOGS := false
 
@@ -56,7 +57,18 @@ func _ready() -> void:
 	_apply_button_feedback(_lang_en_button)
 	_apply_button_feedback(_lang_es_button)
 	_apply_button_feedback(_close_settings_button)
+	_apply_ui_button_sizes()
 	_play_idle_preview()
+
+
+func _apply_ui_button_sizes() -> void:
+	UIStyle.apply_wide_button(_start_button)
+	UIStyle.apply_wide_button(_continue_button)
+	UIStyle.apply_wide_button(_settings_button)
+	UIStyle.apply_wide_button(_reset_button)
+	UIStyle.apply_wide_button(_close_settings_button)
+	UIStyle.apply_language_button(_lang_en_button)
+	UIStyle.apply_language_button(_lang_es_button)
 
 
 func _setup_camera() -> void:
@@ -114,7 +126,13 @@ func _update_texts() -> void:
 
 
 func _update_continue_state() -> void:
-	var has_progress := _mission_state.mission_started or _mission_state.machine_built or _mission_state.test_completed or _mission_state.community_unlocked
+	var has_progress := (
+		_mission_state.mission_started
+		or _mission_state.machine_built
+		or _mission_state.test_completed
+		or _mission_state.community_unlocked
+		or _mission_state.mission_2_completed
+	)
 	_continue_button.disabled = not has_progress
 
 
@@ -138,7 +156,14 @@ func _on_continue_pressed() -> void:
 	if _continue_button.disabled:
 		return
 	# Ir a la escena más relevante según progreso.
-	if _mission_state.community_unlocked or _mission_state.test_completed:
+	if _mission_state.current_mission_id == "carry_first_blocks":
+		if _mission_state.machine_built and not _mission_state.test_completed:
+			_scene_transition.fade_to_scene("res://scenes/test_zone_blocks.tscn")
+		elif not _mission_state.machine_built:
+			_go_to_workshop()
+		else:
+			_scene_transition.fade_to_scene("res://scenes/community.tscn")
+	elif _mission_state.community_unlocked or _mission_state.test_completed:
 		_scene_transition.fade_to_scene("res://scenes/community.tscn")
 	elif _mission_state.machine_built:
 		_scene_transition.fade_to_scene("res://scenes/test_zone.tscn")

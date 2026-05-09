@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://dxv3b8mv3yeo"]
+[gd_scene format=3 uid="uid://fvqpsqm3fmy"]
 
-[ext_resource type="Script" path="res://scripts/community.gd" id="1_community"]
+[ext_resource type="Script" uid="uid://mxags7ghblb7" path="res://scripts/community.gd" id="1_community"]
 
 [sub_resource type="Environment" id="Environment_comm"]
 background_mode = 1
@@ -9,12 +9,15 @@ ambient_light_source = 2
 ambient_light_color = Color(0.98, 0.92, 0.88, 1)
 ambient_light_energy = 0.56
 
+[sub_resource type="BoxMesh" id="BoxMesh_ground_c"]
+size = Vector3(16, 0.14, 14)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground_c"]
 albedo_color = Color(0.52, 0.46, 0.6, 1)
 roughness = 0.9
 
-[sub_resource type="BoxMesh" id="BoxMesh_ground_c"]
-size = Vector3(16.0, 0.14, 14.0)
+[sub_resource type="BoxMesh" id="BoxMesh_path_c"]
+size = Vector3(1.15, 0.045, 5.8)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_path_c"]
 albedo_color = Color(0.78, 0.94, 0.66, 1)
@@ -23,41 +26,45 @@ emission_enabled = true
 emission = Color(0.65, 1, 0.72, 1)
 emission_energy_multiplier = 0.22
 
-[sub_resource type="BoxMesh" id="BoxMesh_path_c"]
-size = Vector3(1.15, 0.045, 5.8)
+[sub_resource type="BoxMesh" id="BoxMesh_house_body"]
+size = Vector3(0.95, 0.52, 0.75)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_house_body"]
 albedo_color = Color(0.88, 0.62, 0.38, 1)
 roughness = 0.65
 
+[sub_resource type="BoxMesh" id="BoxMesh_house_roof"]
+size = Vector3(1.05, 0.12, 0.82)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_house_roof"]
 albedo_color = Color(0.72, 0.42, 0.32, 1)
 roughness = 0.55
+
+[sub_resource type="BoxMesh" id="BoxMesh_house_door"]
+size = Vector3(0.22, 0.38, 0.06)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_house_door"]
 albedo_color = Color(0.35, 0.22, 0.18, 1)
 roughness = 0.75
 
-[sub_resource type="BoxMesh" id="BoxMesh_house_body"]
-size = Vector3(0.95, 0.52, 0.75)
+[sub_resource type="BoxMesh" id="BoxMesh_m2_stack"]
+size = Vector3(0.13, 0.11, 0.13)
 
-[sub_resource type="BoxMesh" id="BoxMesh_house_roof"]
-size = Vector3(1.05, 0.12, 0.82)
-
-[sub_resource type="BoxMesh" id="BoxMesh_house_door"]
-size = Vector3(0.22, 0.38, 0.06)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_core_c"]
-albedo_color = Color(1, 0.78, 0.35, 1)
-emission_enabled = true
-emission = Color(1, 0.65, 0.2, 1)
-emission_energy_multiplier = 2.05
-roughness = 0.35
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2_stack"]
+albedo_color = Color(0.86, 0.58, 0.32, 1)
+roughness = 0.62
 
 [sub_resource type="SphereMesh" id="SphereMesh_core_c"]
 radius = 0.14
 height = 0.28
 radial_segments = 14
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_core_c"]
+albedo_color = Color(1, 0.78, 0.35, 1)
+roughness = 0.35
+emission_enabled = true
+emission = Color(1, 0.65, 0.2, 1)
+emission_energy_multiplier = 2.05
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_petal"]
 top_radius = 0.04
@@ -65,217 +72,231 @@ bottom_radius = 0.06
 height = 0.2
 radial_segments = 8
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gear_c"]
-albedo_color = Color(0.82, 0.75, 0.35, 1)
-metallic = 0.55
-roughness = 0.4
-
 [sub_resource type="CylinderMesh" id="CylinderMesh_gear_c"]
 top_radius = 0.1
 bottom_radius = 0.1
 height = 0.05
 radial_segments = 12
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gear_c"]
+albedo_color = Color(0.82, 0.75, 0.35, 1)
+metallic = 0.55
+roughness = 0.4
+
 [sub_resource type="BoxMesh" id="BoxMesh_block_c"]
 size = Vector3(0.18, 0.22, 0.18)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_comm"]
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
 bg_color = Color(0.14, 0.12, 0.22, 0.74)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-content_margin_left = 12
-content_margin_top = 10
-content_margin_right = 12
-content_margin_bottom = 10
 
-[node name="Community" type="Node3D"]
+[node name="Community" type="Node3D" unique_id=1399986956]
 script = ExtResource("1_community")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=889393501]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 5.8, 3.85, 7.2)
-fov = 52.0
 current = true
+fov = 52.0
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866025, -0.35, 0.35, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 1.5, 6.0, 4.0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=758448398]
+transform = Transform3D(0.866025, -0.35, 0.35, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 1.5, 6, 4)
 light_color = Color(1, 0.95, 0.88, 1)
 light_energy = 1.05
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=52750257]
 environment = SubResource("Environment_comm")
 
-[node name="Ground" type="MeshInstance3D" parent="."]
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=168899925]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07, 0)
 mesh = SubResource("BoxMesh_ground_c")
 surface_material_override/0 = SubResource("StandardMaterial3D_ground_c")
 
-[node name="RestoredPath" type="MeshInstance3D" parent="."]
+[node name="RestoredPath" type="MeshInstance3D" parent="." unique_id=1359968306]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.02, 0.35)
 mesh = SubResource("BoxMesh_path_c")
 surface_material_override/0 = SubResource("StandardMaterial3D_path_c")
 
-[node name="SmallWorkshopOrHouse" type="Node3D" parent="."]
+[node name="SmallWorkshopOrHouse" type="Node3D" parent="." unique_id=1549621338]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35, 0, 0.35)
 
-[node name="HouseBody" type="MeshInstance3D" parent="SmallWorkshopOrHouse"]
+[node name="HouseBody" type="MeshInstance3D" parent="SmallWorkshopOrHouse" unique_id=691380693]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26, 0)
 mesh = SubResource("BoxMesh_house_body")
 surface_material_override/0 = SubResource("StandardMaterial3D_house_body")
 
-[node name="HouseRoof" type="MeshInstance3D" parent="SmallWorkshopOrHouse"]
+[node name="HouseRoof" type="MeshInstance3D" parent="SmallWorkshopOrHouse" unique_id=2040164468]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.58, 0)
 mesh = SubResource("BoxMesh_house_roof")
 surface_material_override/0 = SubResource("StandardMaterial3D_house_roof")
 
-[node name="HouseDoor" type="MeshInstance3D" parent="SmallWorkshopOrHouse"]
+[node name="HouseDoor" type="MeshInstance3D" parent="SmallWorkshopOrHouse" unique_id=2069530966]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0.4)
 mesh = SubResource("BoxMesh_house_door")
 surface_material_override/0 = SubResource("StandardMaterial3D_house_door")
 
-[node name="PlanetCoreLight" type="Node3D" parent="."]
+[node name="Mission2DeliveredBlocks" type="Node3D" parent="SmallWorkshopOrHouse" unique_id=130741322]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68, 0, 0.42)
+visible = false
+
+[node name="CrateA" type="MeshInstance3D" parent="SmallWorkshopOrHouse/Mission2DeliveredBlocks" unique_id=125738020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16, 0.055, 0.02)
+mesh = SubResource("BoxMesh_m2_stack")
+surface_material_override/0 = SubResource("StandardMaterial3D_m2_stack")
+
+[node name="CrateB" type="MeshInstance3D" parent="SmallWorkshopOrHouse/Mission2DeliveredBlocks" unique_id=338052063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, 0.055, -0.04)
+mesh = SubResource("BoxMesh_m2_stack")
+surface_material_override/0 = SubResource("StandardMaterial3D_m2_stack")
+
+[node name="CrateC" type="MeshInstance3D" parent="SmallWorkshopOrHouse/Mission2DeliveredBlocks" unique_id=1580655431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.075, 0.06)
+mesh = SubResource("BoxMesh_m2_stack")
+surface_material_override/0 = SubResource("StandardMaterial3D_m2_stack")
+
+[node name="PlanetCoreLight" type="Node3D" parent="." unique_id=1662079671]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55, 0.22, -0.55)
 
-[node name="CoreLight" type="OmniLight3D" parent="PlanetCoreLight"]
+[node name="CoreLight" type="OmniLight3D" parent="PlanetCoreLight" unique_id=1965766691]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, 0)
 light_color = Color(1, 0.82, 0.45, 1)
 light_energy = 2.2
 omni_range = 4.5
-shadow_enabled = false
 
-[node name="CoreSphere" type="MeshInstance3D" parent="PlanetCoreLight"]
+[node name="CoreSphere" type="MeshInstance3D" parent="PlanetCoreLight" unique_id=891337721]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, 0)
 mesh = SubResource("SphereMesh_core_c")
 surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
 
-[node name="PetalN" type="MeshInstance3D" parent="PlanetCoreLight"]
+[node name="PetalN" type="MeshInstance3D" parent="PlanetCoreLight" unique_id=1330495796]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.16, -0.22)
 mesh = SubResource("CylinderMesh_petal")
 surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
 
-[node name="PetalS" type="MeshInstance3D" parent="PlanetCoreLight"]
+[node name="PetalS" type="MeshInstance3D" parent="PlanetCoreLight" unique_id=2100955798]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0.16, 0.22)
 mesh = SubResource("CylinderMesh_petal")
 surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
 
-[node name="PetalE" type="MeshInstance3D" parent="PlanetCoreLight"]
+[node name="PetalE" type="MeshInstance3D" parent="PlanetCoreLight" unique_id=631880617]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.22, 0.16, 0)
 mesh = SubResource("CylinderMesh_petal")
 surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
 
-[node name="PetalW" type="MeshInstance3D" parent="PlanetCoreLight"]
+[node name="PetalW" type="MeshInstance3D" parent="PlanetCoreLight" unique_id=1459259175]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -0.22, 0.16, 0)
 mesh = SubResource("CylinderMesh_petal")
 surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
 
-[node name="DecorationPieces" type="Node3D" parent="."]
+[node name="DecorationPieces" type="Node3D" parent="." unique_id=770139746]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 1.15)
 
-[node name="Gear1" type="MeshInstance3D" parent="DecorationPieces"]
+[node name="Gear1" type="MeshInstance3D" parent="DecorationPieces" unique_id=884698160]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0.06, 0)
 mesh = SubResource("CylinderMesh_gear_c")
 surface_material_override/0 = SubResource("StandardMaterial3D_gear_c")
 
-[node name="Gear2" type="MeshInstance3D" parent="DecorationPieces"]
+[node name="Gear2" type="MeshInstance3D" parent="DecorationPieces" unique_id=659126505]
 transform = Transform3D(0.707107, 0, -0.707107, -0.5, 0.707107, -0.5, 0.5, 0.707107, 0.5, 0.35, 0.12, 0.2)
 mesh = SubResource("CylinderMesh_gear_c")
 surface_material_override/0 = SubResource("StandardMaterial3D_gear_c")
 
-[node name="BlockA" type="MeshInstance3D" parent="DecorationPieces"]
+[node name="BlockA" type="MeshInstance3D" parent="DecorationPieces" unique_id=650023448]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.12, 0.15)
 mesh = SubResource("BoxMesh_block_c")
 surface_material_override/0 = SubResource("StandardMaterial3D_house_roof")
 
-[node name="BlockB" type="MeshInstance3D" parent="DecorationPieces"]
+[node name="BlockB" type="MeshInstance3D" parent="DecorationPieces" unique_id=386053664]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.08, -0.1)
 mesh = SubResource("BoxMesh_block_c")
 surface_material_override/0 = SubResource("StandardMaterial3D_gear_c")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=655340500]
 
-[node name="UI" type="VBoxContainer" parent="CanvasLayer"]
-layout_mode = 1
+[node name="UI" type="VBoxContainer" parent="CanvasLayer" unique_id=1449825497]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 16.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = -24.0
+offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="CanvasLayer/UI"]
+[node name="TitleLabel" type="Label" parent="CanvasLayer/UI" unique_id=249241515]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.98, 0.95, 1, 1)
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 28
 text = "Un poquito de planeta"
 
-[node name="IgorMessageLabel" type="Label" parent="CanvasLayer/UI"]
+[node name="IgorMessageLabel" type="Label" parent="CanvasLayer/UI" unique_id=1555021693]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 64)
+custom_minimum_size = Vector2(0, 76)
 layout_mode = 2
 size_flags_horizontal = 3
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.94, 0.96, 1, 1)
-theme_override_font_sizes/font_size = 19
+theme_override_font_sizes/font_size = 21
 text = "Una parte del planeta volvió a moverse."
 autowrap_mode = 3
 
-[node name="ProgressLabel" type="Label" parent="CanvasLayer/UI"]
+[node name="ProgressLabel" type="Label" parent="CanvasLayer/UI" unique_id=836025095]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.85, 0.95, 0.88, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "Progreso del planeta: 1%"
 
-[node name="MissionStatusLabel" type="Label" parent="CanvasLayer/UI"]
+[node name="MissionStatusLabel" type="Label" parent="CanvasLayer/UI" unique_id=681268275]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.95, 0.75, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 19
 text = "Primera misión completada"
 
-[node name="ButtonRow" type="HBoxContainer" parent="CanvasLayer/UI"]
+[node name="ButtonRow" type="HBoxContainer" parent="CanvasLayer/UI" unique_id=102507670]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_constants/separation = 12
 
-[node name="BackToWorkshopButton" type="Button" parent="CanvasLayer/UI/ButtonRow"]
+[node name="BackToWorkshopButton" type="Button" parent="CanvasLayer/UI/ButtonRow" unique_id=1639297282]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 48)
+custom_minimum_size = Vector2(228, 54)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "Volver al taller"
 
-[node name="NextButton" type="Button" parent="CanvasLayer/UI/ButtonRow"]
+[node name="NextButton" type="Button" parent="CanvasLayer/UI/ButtonRow" unique_id=515433449]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 48)
+custom_minimum_size = Vector2(228, 54)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "Siguiente misión"
 
-[node name="Spacer" type="Control" parent="CanvasLayer/UI"]
+[node name="Spacer" type="Control" parent="CanvasLayer/UI" unique_id=1274416990]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="HintPanel" type="Panel" parent="CanvasLayer/UI"]
+[node name="HintPanel" type="Panel" parent="CanvasLayer/UI" unique_id=33946086]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_comm")
 
-[node name="HintLabel" type="Label" parent="CanvasLayer/UI/HintPanel"]
+[node name="HintLabel" type="Label" parent="CanvasLayer/UI/HintPanel" unique_id=643370124]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -286,8 +307,7 @@ offset_right = -12.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.92, 0.94, 1, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 17
 text = "Cada máquina que probamos despierta un poquito más al planeta mecánico."
 autowrap_mode = 3
