@@ -4,6 +4,9 @@ extends Node3D
 
 const DBG_WORKSHOP := false ## Poné en true para ver señales (prefijo [IGOR workshop]).
 
+## Coincide con el primer valor de @export_enum en build_slot.gd (BASE).
+const SLOT_TYPE_BASE := 0
+
 const IgorGuideScript := preload("res://scripts/igor_guide.gd")
 
 @onready var _igor_label: Label = %IgorMessageLabel
@@ -16,6 +19,8 @@ var _validation_slots: Array = []
 var _igor_guide: RefCounted
 ## Transform local inicial de cada pieza respecto a Parts (para Reiniciar).
 var _part_initial_transform: Dictionary = {}
+## Evita programar varias veces el cambio a la zona de prueba si se aprieta Probar repetidamente.
+var _test_zone_transition_scheduled: bool = false
 
 
 func _ready() -> void:
@@ -108,15 +113,56 @@ func _on_slot_clicked(slot: Node) -> void:
 	part_node.scale = Vector3.ONE
 	if slot.has_method("flash_success"):
 		slot.flash_success()
-	set_igor_message("¡Muy bien! Esa pieza encajó.")
+
+	var placed_base: bool = int(slot.slot_type) == SLOT_TYPE_BASE
+	if placed_base:
+		var dock := get_node_or_null("MotorlingDock") as Node3D
+		var motorling := get_node_or_null("MotorlingPlaceholder")
+		if dock != null and motorling != null and motorling.has_method("move_to_dock"):
+			motorling.move_to_dock(dock)
+		set_igor_message("El motorcito encontró una base.")
+	else:
+		set_igor_message("¡Muy bien! Esa pieza encajó.")
 
 
 func _on_test_pressed() -> void:
 	var msg: String = _igor_guide.validate_build(_validation_slots)
 	set_igor_message(msg)
+	if not _igor_guide.is_build_complete(_validation_slots):
+		return
+	if _test_zone_transition_scheduled:
+		return
+	_test_zone_transition_scheduled = true
+	var motorling := get_node_or_null("MotorlingPlaceholder")
+	if motorling != null and motorling.has_method("success_pulse"):
+		motorling.success_pulse()
+	_pulse_placed_parts_happy()
+	get_tree().create_timer(1.2).timeout.connect(_go_to_test_zone)
+
+
+func _go_to_test_zone() -> void:
+	_test_zone_transition_scheduled = false
+	if not is_inside_tree():
+		return
+	if not _igor_guide.is_build_complete(_validation_slots):
+		return
+	get_tree().change_scene_to_file("res://scenes/test_zone.tscn")
+
+
+func _pulse_placed_parts_happy() -> void:
+	for slot_node: Node in _validation_slots:
+		var p: Node = slot_node.placed_part
+		if p == null:
+			continue
+		var n3 := p as Node3D
+		var tw := create_tween()
+		tw.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tw.tween_property(n3, "scale", Vector3(1.06, 1.06, 1.06), 0.11)
+		tw.tween_property(n3, "scale", Vector3.ONE, 0.34)
 
 
 func _on_reset_pressed() -> void:
+	_test_zone_transition_scheduled = false
 	_clear_selection_visual()
 	for slot: Node in _validation_slots:
 		var p: Node = slot.placed_part
@@ -134,4 +180,7 @@ func _on_reset_pressed() -> void:
 			part.sync_idle_after_reset()
 		if part.has_method("set_selected_visual"):
 			part.set_selected_visual(false)
+	var motorling := get_node_or_null("MotorlingPlaceholder")
+	if motorling != null and motorling.has_method("reset_to_start"):
+		motorling.reset_to_start()
 	set_igor_message("Volvamos a intentarlo.")
