@@ -4,21 +4,24 @@
 
 [sub_resource type="Environment" id="Environment_comm"]
 background_mode = 1
-background_color = Color(0.62, 0.52, 0.78, 1)
+background_color = Color(0.66, 0.58, 0.82, 1)
 ambient_light_source = 2
 ambient_light_color = Color(0.98, 0.92, 0.88, 1)
-ambient_light_energy = 0.52
+ambient_light_energy = 0.56
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground_c"]
-albedo_color = Color(0.48, 0.4, 0.55, 1)
+albedo_color = Color(0.52, 0.46, 0.6, 1)
 roughness = 0.9
 
 [sub_resource type="BoxMesh" id="BoxMesh_ground_c"]
 size = Vector3(16.0, 0.14, 14.0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_path_c"]
-albedo_color = Color(0.72, 0.88, 0.58, 1)
-roughness = 0.42
+albedo_color = Color(0.78, 0.94, 0.66, 1)
+roughness = 0.36
+emission_enabled = true
+emission = Color(0.65, 1, 0.72, 1)
+emission_energy_multiplier = 0.22
 
 [sub_resource type="BoxMesh" id="BoxMesh_path_c"]
 size = Vector3(1.15, 0.045, 5.8)
@@ -48,7 +51,7 @@ size = Vector3(0.22, 0.38, 0.06)
 albedo_color = Color(1, 0.78, 0.35, 1)
 emission_enabled = true
 emission = Color(1, 0.65, 0.2, 1)
-emission_energy_multiplier = 1.85
+emission_energy_multiplier = 2.05
 roughness = 0.35
 
 [sub_resource type="SphereMesh" id="SphereMesh_core_c"]

@@ -4,6 +4,9 @@ extends Node3D
 
 const BuildStateScript := preload("res://scripts/build_state.gd")
 const MissionStateScript := preload("res://scripts/mission_state.gd")
+const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
+
+const DEBUG_LOGS := false
 
 @onready var _igor_label: Label = %IgorMessageLabel
 @onready var _start_button: Button = %StartTestButton
@@ -12,6 +15,7 @@ const MissionStateScript := preload("res://scripts/mission_state.gd")
 
 var _build_state: BuildStateScript
 var _mission_state: MissionStateScript
+var _scene_transition: SceneTransitionScript
 var test_running: bool = false
 var test_completed: bool = false
 
@@ -19,6 +23,7 @@ var test_completed: bool = false
 func _ready() -> void:
 	_build_state = get_node("/root/BuildState") as BuildStateScript
 	_mission_state = get_node("/root/MissionState") as MissionStateScript
+	_scene_transition = get_node("/root/SceneTransition") as SceneTransitionScript
 	_setup_camera()
 	_apply_machine_from_build_state()
 	_reset_mission_visuals()
@@ -26,6 +31,9 @@ func _ready() -> void:
 	_start_button.pressed.connect(_on_start_pressed)
 	_continue_button.pressed.connect(_on_continue_pressed)
 	_back_button.pressed.connect(_on_back_pressed)
+	_apply_button_feedback(_start_button)
+	_apply_button_feedback(_continue_button)
+	_apply_button_feedback(_back_button)
 
 
 func _reset_mission_visuals() -> void:
@@ -39,7 +47,8 @@ func _reset_mission_visuals() -> void:
 
 
 func _apply_machine_from_build_state() -> void:
-	print("TestZone BuildState complete: ", _build_state.is_complete())
+	if DEBUG_LOGS:
+		print("TestZone BuildState complete: ", _build_state.is_complete())
 	var machine := $Machine as Node3D
 	var use_fallback: bool = not _build_state.is_complete()
 
@@ -68,11 +77,20 @@ func _setup_camera() -> void:
 
 
 func _go_to_workshop() -> void:
-	get_tree().change_scene_to_file("res://scenes/workshop.tscn")
+	_scene_transition.fade_to_scene("res://scenes/workshop.tscn")
 
 
 func _go_to_community() -> void:
-	get_tree().change_scene_to_file("res://scenes/community.tscn")
+	_scene_transition.fade_to_scene("res://scenes/community.tscn")
+
+
+func _apply_button_feedback(b: Button) -> void:
+	b.button_down.connect(func() -> void:
+		b.scale = Vector2(0.98, 0.98)
+	)
+	b.button_up.connect(func() -> void:
+		b.scale = Vector2.ONE
+	)
 
 
 func _on_back_pressed() -> void:
@@ -87,15 +105,18 @@ func _on_start_pressed() -> void:
 	if test_running or test_completed:
 		return
 	test_running = true
-	print("Test started")
+	if DEBUG_LOGS:
+		print("Test started")
 	_start_button.disabled = true
 	_igor_label.text = "¡Mira! El motorcito está ayudando."
 	await _run_clear_path_demo()
 	test_running = false
 	test_completed = true
-	print("Test completed")
+	if DEBUG_LOGS:
+		print("Test completed")
 	_mission_state.mark_test_completed()
-	print("MissionState: test completed")
+	if DEBUG_LOGS:
+		print("MissionState: test completed")
 	$ClearedPath.visible = true
 	$SuccessSign.visible = true
 	$RewardGear.visible = true
@@ -138,7 +159,8 @@ func _tween_rock_aside(rock: Node3D) -> void:
 	tw2.tween_property(rock, "scale", Vector3(0.15, 0.15, 0.15), 0.35)
 	await tw2.finished
 	rock.visible = false
-	print("Rock cleared: ", rock.name)
+	if DEBUG_LOGS:
+		print("Rock cleared: ", rock.name)
 
 
 func _play_reward_pulse() -> void:

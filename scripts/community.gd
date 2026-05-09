@@ -3,6 +3,9 @@ extends Node3D
 ## Primer vistazo al planeta que mejora tras ayudar en la zona de prueba (MVP 0.8).
 
 const MissionStateScript := preload("res://scripts/mission_state.gd")
+const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
+
+const DEBUG_LOGS := false
 
 @onready var _igor_label: Label = %IgorMessageLabel
 @onready var _progress_label: Label = %ProgressLabel
@@ -11,19 +14,24 @@ const MissionStateScript := preload("res://scripts/mission_state.gd")
 @onready var _next_button: Button = %NextButton
 
 var _mission_state: MissionStateScript
+var _scene_transition: SceneTransitionScript
 
 
 func _ready() -> void:
 	_mission_state = get_node("/root/MissionState") as MissionStateScript
+	_scene_transition = get_node("/root/SceneTransition") as SceneTransitionScript
 	_setup_camera()
 	_igor_label.text = "Una parte del planeta volvió a moverse."
 	_progress_label.text = "Progreso del planeta: 1%"
 	_back_button.pressed.connect(_on_back_pressed)
 	_next_button.pressed.connect(_on_next_pressed)
+	_apply_button_feedback(_back_button)
+	_apply_button_feedback(_next_button)
 	_play_intro_celebration()
 
 	_mission_state.mark_community_unlocked()
-	print("MissionState: community unlocked")
+	if DEBUG_LOGS:
+		print("MissionState: community unlocked")
 
 	_mission_status_label.visible = _mission_state.community_unlocked
 
@@ -53,7 +61,16 @@ func _play_intro_celebration() -> void:
 
 
 func _go_to_workshop() -> void:
-	get_tree().change_scene_to_file("res://scenes/workshop.tscn")
+	_scene_transition.fade_to_scene("res://scenes/workshop.tscn")
+
+
+func _apply_button_feedback(b: Button) -> void:
+	b.button_down.connect(func() -> void:
+		b.scale = Vector2(0.98, 0.98)
+	)
+	b.button_up.connect(func() -> void:
+		b.scale = Vector2.ONE
+	)
 
 
 func _on_back_pressed() -> void:

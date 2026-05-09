@@ -10,15 +10,15 @@ ambient_light_color = Color(0.95, 0.98, 0.92, 1)
 ambient_light_energy = 0.55
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
-albedo_color = Color(0.35, 0.62, 0.32, 1)
-roughness = 0.92
+albedo_color = Color(0.42, 0.7, 0.42, 1)
+roughness = 0.9
 
 [sub_resource type="BoxMesh" id="BoxMesh_ground"]
 size = Vector3(14.0, 0.12, 16.0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_path"]
-albedo_color = Color(0.78, 0.72, 0.58, 1)
-roughness = 0.88
+albedo_color = Color(0.8, 0.74, 0.6, 1)
+roughness = 0.8
 
 [sub_resource type="BoxMesh" id="BoxMesh_path"]
 size = Vector3(1.35, 0.04, 7.5)
@@ -80,8 +80,8 @@ roughness = 0.5
 size = Vector3(0.2, 0.14, 0.2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rock"]
-albedo_color = Color(0.48, 0.44, 0.4, 1)
-roughness = 0.85
+albedo_color = Color(0.52, 0.5, 0.46, 1)
+roughness = 0.92
 
 [sub_resource type="SphereMesh" id="SphereMesh_rock"]
 radius = 0.15
@@ -89,8 +89,11 @@ height = 0.3
 radial_segments = 10
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cleared"]
-albedo_color = Color(0.78, 0.92, 0.62, 1)
-roughness = 0.38
+albedo_color = Color(0.86, 0.98, 0.74, 1)
+roughness = 0.32
+emission_enabled = true
+emission = Color(0.7, 1, 0.75, 1)
+emission_energy_multiplier = 0.35
 
 [sub_resource type="BoxMesh" id="BoxMesh_cleared"]
 size = Vector3(1.4, 0.045, 7.6)
@@ -101,7 +104,7 @@ metallic = 0.45
 roughness = 0.35
 emission_enabled = true
 emission = Color(1, 0.88, 0.28, 1)
-emission_energy_multiplier = 2.2
+emission_energy_multiplier = 2.6
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_gear"]
 top_radius = 0.11

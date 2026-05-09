@@ -2,6 +2,8 @@ extends Node
 
 ## Estado global de la misión actual (MVP 0.9; sin guardado ni progresión compleja).
 
+const DEBUG_LOGS := false
+
 var current_mission_id: String = "clear_first_path"
 var current_mission_title: String = "Despejar el primer camino"
 var current_mission_description: String = "Construí una máquina con pala para mover las piedras."
@@ -17,7 +19,8 @@ func start_first_mission() -> void:
 	current_mission_title = "Despejar el primer camino"
 	current_mission_description = "Construí una máquina con pala para mover las piedras."
 	mission_started = true
-	print("Mission started")
+	if DEBUG_LOGS:
+		print("Mission started")
 
 
 func mark_machine_built() -> void:

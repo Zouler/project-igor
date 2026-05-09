@@ -4,6 +4,9 @@ extends Node3D
 
 const BuildStateScript := preload("res://scripts/build_state.gd")
 const MissionStateScript := preload("res://scripts/mission_state.gd")
+const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
+
+const DEBUG_LOGS := false
 
 @onready var _footer_label: Label = %SmallFooterLabel
 @onready var _start_button: Button = %StartButton
@@ -12,15 +15,20 @@ const MissionStateScript := preload("res://scripts/mission_state.gd")
 
 var _build_state: BuildStateScript
 var _mission_state: MissionStateScript
+var _scene_transition: SceneTransitionScript
 
 
 func _ready() -> void:
 	_build_state = get_node("/root/BuildState") as BuildStateScript
 	_mission_state = get_node("/root/MissionState") as MissionStateScript
+	_scene_transition = get_node("/root/SceneTransition") as SceneTransitionScript
 	_setup_camera()
 	_start_button.pressed.connect(_on_start_pressed)
 	_continue_button.pressed.connect(_on_continue_pressed)
 	_reset_button.pressed.connect(_on_reset_demo_pressed)
+	_apply_button_feedback(_start_button)
+	_apply_button_feedback(_continue_button)
+	_apply_button_feedback(_reset_button)
 	_play_idle_preview()
 
 
@@ -43,7 +51,16 @@ func _play_idle_preview() -> void:
 
 
 func _go_to_workshop() -> void:
-	get_tree().change_scene_to_file("res://scenes/workshop.tscn")
+	_scene_transition.fade_to_scene("res://scenes/workshop.tscn")
+
+
+func _apply_button_feedback(b: Button) -> void:
+	b.button_down.connect(func() -> void:
+		b.scale = Vector2(0.98, 0.98)
+	)
+	b.button_up.connect(func() -> void:
+		b.scale = Vector2.ONE
+	)
 
 
 func _on_start_pressed() -> void:
@@ -61,4 +78,6 @@ func _on_reset_demo_pressed() -> void:
 	_build_state.reset()
 	_mission_state.reset_mission()
 	_footer_label.text = "Demo reiniciada."
+	if DEBUG_LOGS:
+		print("Demo reset")
 

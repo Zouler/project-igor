@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 BuildState="*res://scripts/build_state.gd"
 MissionState="*res://scripts/mission_state.gd"
+SceneTransition="*res://scripts/scene_transition.gd"
 
 [physics]
 

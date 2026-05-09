@@ -16,8 +16,22 @@ ambient_light_energy = 0.45
 size = Vector3(4.8, 0.14, 3.4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_platform"]
-albedo_color = Color(0.62, 0.48, 0.36, 1)
+albedo_color = Color(0.64, 0.48, 0.34, 1)
+roughness = 0.92
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wood_edge"]
+albedo_color = Color(0.5, 0.34, 0.22, 1)
 roughness = 0.88
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_table_leg"]
+albedo_color = Color(0.28, 0.22, 0.18, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_table_edge"]
+size = Vector3(4.9, 0.06, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_table_leg"]
+size = Vector3(0.18, 0.6, 0.18)
 
 [sub_resource type="BoxMesh" id="BoxMesh_igor_body"]
 size = Vector3(0.38, 0.42, 0.26)
@@ -82,7 +96,7 @@ radial_segments = 14
 albedo_color = Color(1, 0.88, 0.4, 1)
 emission_enabled = true
 emission = Color(1, 0.58, 0.12, 1)
-emission_energy_multiplier = 1.25
+emission_energy_multiplier = 1.55
 
 [sub_resource type="BoxMesh" id="BoxMesh_motorling_fin"]
 size = Vector3(0.055, 0.065, 0.018)
@@ -113,8 +127,63 @@ size = Vector3(0.52, 0.03, 0.52)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_slot"]
 transparency = 1
-albedo_color = Color(0.35, 0.75, 0.55, 0.35)
-roughness = 0.6
+albedo_color = Color(0.3, 0.82, 0.62, 0.32)
+roughness = 0.55
+emission_enabled = true
+emission = Color(0.2, 0.95, 0.55, 1)
+emission_energy_multiplier = 0.65
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dark_metal"]
+albedo_color = Color(0.22, 0.24, 0.28, 1)
+metallic = 0.55
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bolt"]
+albedo_color = Color(0.18, 0.18, 0.2, 1)
+metallic = 0.75
+roughness = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bolt"]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.02
+radial_segments = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_side_panel"]
+size = Vector3(0.52, 0.12, 0.06)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hubcap"]
+radius = 0.07
+height = 0.14
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hubcap"]
+albedo_color = Color(0.78, 0.78, 0.82, 1)
+metallic = 0.6
+roughness = 0.35
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_motor_detail"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 0.16
+radial_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_battery_terminal_red"]
+albedo_color = Color(0.95, 0.22, 0.22, 1)
+roughness = 0.45
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_battery_terminal_black"]
+albedo_color = Color(0.1, 0.1, 0.12, 1)
+roughness = 0.42
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_battery_terminal"]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.06
+radial_segments = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_shovel_arm"]
+size = Vector3(0.32, 0.05, 0.09)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_base"]
 size = Vector3(0.48, 0.22, 0.48)
@@ -217,6 +286,46 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07, 0)
 mesh = SubResource("BoxMesh_platform")
 surface_material_override/0 = SubResource("StandardMaterial3D_platform")
 
+[node name="TableEdgeFront" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.65)
+mesh = SubResource("BoxMesh_table_edge")
+surface_material_override/0 = SubResource("StandardMaterial3D_wood_edge")
+
+[node name="TableEdgeBack" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, -1.65)
+mesh = SubResource("BoxMesh_table_edge")
+surface_material_override/0 = SubResource("StandardMaterial3D_wood_edge")
+
+[node name="TableEdgeLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -2.45, 0.01, 0)
+mesh = SubResource("BoxMesh_table_edge")
+surface_material_override/0 = SubResource("StandardMaterial3D_wood_edge")
+
+[node name="TableEdgeRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 2.45, 0.01, 0)
+mesh = SubResource("BoxMesh_table_edge")
+surface_material_override/0 = SubResource("StandardMaterial3D_wood_edge")
+
+[node name="TableLegFL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1, -0.44, 1.2)
+mesh = SubResource("BoxMesh_table_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_table_leg")
+
+[node name="TableLegFR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, -0.44, 1.2)
+mesh = SubResource("BoxMesh_table_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_table_leg")
+
+[node name="TableLegBL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1, -0.44, -1.2)
+mesh = SubResource("BoxMesh_table_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_table_leg")
+
+[node name="TableLegBR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, -0.44, -1.2)
+mesh = SubResource("BoxMesh_table_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_table_leg")
+
 [node name="MotorlingDock" type="Node3D" parent="." unique_id=990015000]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0.06)
 
@@ -282,6 +391,16 @@ mesh = SubResource("SphereMesh_motorling_spark")
 surface_material_override/0 = SubResource("StandardMaterial3D_motorling_spark")
 
 [node name="OptionalShellPieces" type="Node3D" parent="MotorlingPlaceholder" unique_id=990010006]
+
+[node name="EarBoltL" type="MeshInstance3D" parent="MotorlingPlaceholder/OptionalShellPieces"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0.16, -0.03)
+mesh = SubResource("CylinderMesh_bolt")
+surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
+
+[node name="EarBoltR" type="MeshInstance3D" parent="MotorlingPlaceholder/OptionalShellPieces"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0.16, -0.03)
+mesh = SubResource("CylinderMesh_bolt")
+surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
 
 [node name="FinLeft" type="MeshInstance3D" parent="MotorlingPlaceholder/OptionalShellPieces" unique_id=990010007]
 transform = Transform3D(0.906, 0, -0.422, 0, 1, 0, 0.422, 0, 0.906, -0.1, 0.08, 0)
@@ -450,6 +569,36 @@ shape = SubResource("BoxShape3D_base")
 mesh = SubResource("BoxMesh_base")
 surface_material_override/0 = SubResource("StandardMaterial3D_yellow")
 
+[node name="SidePanelL" type="MeshInstance3D" parent="Parts/BasePart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.27, 0.08, 0)
+mesh = SubResource("BoxMesh_side_panel")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark_metal")
+
+[node name="SidePanelR" type="MeshInstance3D" parent="Parts/BasePart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27, 0.08, 0)
+mesh = SubResource("BoxMesh_side_panel")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark_metal")
+
+[node name="BoltFL" type="MeshInstance3D" parent="Parts/BasePart"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.18, 0.12, 0.18)
+mesh = SubResource("CylinderMesh_bolt")
+surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
+
+[node name="BoltFR" type="MeshInstance3D" parent="Parts/BasePart"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.18, 0.12, 0.18)
+mesh = SubResource("CylinderMesh_bolt")
+surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
+
+[node name="BoltBL" type="MeshInstance3D" parent="Parts/BasePart"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.18, 0.12, -0.18)
+mesh = SubResource("CylinderMesh_bolt")
+surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
+
+[node name="BoltBR" type="MeshInstance3D" parent="Parts/BasePart"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.18, 0.12, -0.18)
+mesh = SubResource("CylinderMesh_bolt")
+surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
+
 [node name="PartLabel" type="Label3D" parent="Parts/BasePart" unique_id=2121207635]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 pixel_size = 0.0065
@@ -474,6 +623,16 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
 mesh = SubResource("CylinderMesh_wheel")
 surface_material_override/0 = SubResource("StandardMaterial3D_wheel")
 
+[node name="HubL" type="MeshInstance3D" parent="Parts/WheelsPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 0.0, 0.0)
+mesh = SubResource("SphereMesh_hubcap")
+surface_material_override/0 = SubResource("StandardMaterial3D_hubcap")
+
+[node name="HubR" type="MeshInstance3D" parent="Parts/WheelsPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0.0, 0.0)
+mesh = SubResource("SphereMesh_hubcap")
+surface_material_override/0 = SubResource("StandardMaterial3D_hubcap")
+
 [node name="PartLabel" type="Label3D" parent="Parts/WheelsPart" unique_id=2139199023]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
 pixel_size = 0.0065
@@ -495,6 +654,16 @@ shape = SubResource("BoxShape3D_motor")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Parts/MotorPart" unique_id=532116121]
 mesh = SubResource("BoxMesh_motor")
 surface_material_override/0 = SubResource("StandardMaterial3D_motor")
+
+[node name="Shaft" type="MeshInstance3D" parent="Parts/MotorPart"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.22, 0.08, 0)
+mesh = SubResource("CylinderMesh_motor_detail")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark_metal")
+
+[node name="BoltTop" type="MeshInstance3D" parent="Parts/MotorPart"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.12, 0.17, 0.12)
+mesh = SubResource("CylinderMesh_bolt")
+surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
 
 [node name="PartLabel" type="Label3D" parent="Parts/MotorPart" unique_id=532116122]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
@@ -524,6 +693,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
 mesh = SubResource("BoxMesh_battery_cap")
 surface_material_override/0 = SubResource("StandardMaterial3D_battery_cap")
 
+[node name="TerminalPlus" type="MeshInstance3D" parent="Parts/BatteryPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.18, 0.12)
+mesh = SubResource("CylinderMesh_battery_terminal")
+surface_material_override/0 = SubResource("StandardMaterial3D_battery_terminal_red")
+
+[node name="TerminalMinus" type="MeshInstance3D" parent="Parts/BatteryPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.18, 0.12)
+mesh = SubResource("CylinderMesh_battery_terminal")
+surface_material_override/0 = SubResource("StandardMaterial3D_battery_terminal_black")
+
 [node name="PartLabel" type="Label3D" parent="Parts/BatteryPart" unique_id=728407247]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, 0)
 pixel_size = 0.0065
@@ -551,6 +730,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_shovel")
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.18, 0.12, 0)
 mesh = SubResource("CylinderMesh_shovel_handle")
 surface_material_override/0 = SubResource("StandardMaterial3D_shovel")
+
+[node name="Arm" type="MeshInstance3D" parent="Parts/ShovelPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.03, 0)
+mesh = SubResource("BoxMesh_shovel_arm")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark_metal")
 
 [node name="PartLabel" type="Label3D" parent="Parts/ShovelPart" unique_id=1857910016]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44, 0)
