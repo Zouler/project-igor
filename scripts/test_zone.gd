@@ -1,17 +1,44 @@
 extends Node3D
 
-## Zona de prueba MVP: la máquina completa despeja piedras del camino (solo Tweens, sin física).
+## Zona de prueba MVP: la máquina despeja piedras; aspecto según BuildState.
+
+const BuildStateScript := preload("res://scripts/build_state.gd")
 
 @onready var _igor_label: Label = %IgorMessageLabel
 @onready var _start_button: Button = %StartTestButton
 @onready var _back_button: Button = %BackToWorkshopButton
 
+var _build_state: BuildStateScript
+
 
 func _ready() -> void:
+	_build_state = get_node("/root/BuildState") as BuildStateScript
 	_setup_camera()
+	_apply_machine_from_build_state()
 	_igor_label.text = "Probemos la nueva máquina."
 	_start_button.pressed.connect(_on_start_pressed)
 	_back_button.pressed.connect(_on_back_pressed)
+
+
+func _apply_machine_from_build_state() -> void:
+	print("TestZone BuildState complete: ", _build_state.is_complete())
+	var machine := $Machine as Node3D
+	var use_fallback: bool = not _build_state.is_complete()
+
+	var show_base: bool = use_fallback or _build_state.has_base
+	var show_wheels: bool = use_fallback or _build_state.has_wheels
+	var show_motor: bool = use_fallback or _build_state.has_motor
+	var show_battery: bool = use_fallback or _build_state.has_battery
+	var show_shovel: bool = _build_state.tool_type == "shovel"
+	var show_core: bool = use_fallback or _build_state.is_complete()
+
+	machine.get_node("Body").visible = show_base
+	machine.get_node("Wheels").visible = show_wheels
+	machine.get_node("Motor").visible = show_motor
+	machine.get_node("Battery").visible = show_battery
+	machine.get_node("Shovel").visible = show_shovel
+	machine.get_node("MotorlingCore").visible = show_core
+	machine.get_node("MachineNameLabel").visible = show_base
 
 
 func _setup_camera() -> void:

@@ -2,6 +2,8 @@ extends Node3D
 
 ## Escena principal 3D del taller: selección de pieza + click en slot, validación con «Probar».
 
+const BuildStateScript := preload("res://scripts/build_state.gd")
+
 const DBG_WORKSHOP := false ## Poné en true para ver señales (prefijo [IGOR workshop]).
 
 ## Coincide con el primer valor de @export_enum en build_slot.gd (BASE).
@@ -17,6 +19,7 @@ const IgorGuideScript := preload("res://scripts/igor_guide.gd")
 var _selected_part: Node = null
 var _validation_slots: Array = []
 var _igor_guide: RefCounted
+var _build_state: BuildStateScript
 ## Transform local inicial de cada pieza respecto a Parts (para Reiniciar).
 var _part_initial_transform: Dictionary = {}
 ## Evita programar varias veces el cambio a la zona de prueba si se aprieta Probar repetidamente.
@@ -24,6 +27,7 @@ var _test_zone_transition_scheduled: bool = false
 
 
 func _ready() -> void:
+	_build_state = get_node("/root/BuildState") as BuildStateScript
 	_igor_guide = IgorGuideScript.new()
 	_setup_camera()
 	_title_label.text = "Taller I.G.O.R."
@@ -133,6 +137,7 @@ func _on_test_pressed() -> void:
 	if _test_zone_transition_scheduled:
 		return
 	_test_zone_transition_scheduled = true
+	_build_state.set_from_workshop(_validation_slots)
 	var motorling := get_node_or_null("MotorlingPlaceholder")
 	if motorling != null and motorling.has_method("success_pulse"):
 		motorling.success_pulse()
@@ -163,6 +168,7 @@ func _pulse_placed_parts_happy() -> void:
 
 func _on_reset_pressed() -> void:
 	_test_zone_transition_scheduled = false
+	_build_state.reset()
 	_clear_selection_visual()
 	for slot: Node in _validation_slots:
 		var p: Node = slot.placed_part

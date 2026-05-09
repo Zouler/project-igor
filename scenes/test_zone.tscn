@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c8testzoneigor01"]
+[gd_scene format=3 uid="uid://bjj6fynee2xrk"]
 
 [ext_resource type="Script" path="res://scripts/test_zone.gd" id="1_testzone"]
 
@@ -64,6 +64,20 @@ emission_energy_multiplier = 1.6
 radius = 0.07
 height = 0.14
 radial_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_motor_tz"]
+albedo_color = Color(0.25, 0.45, 0.92, 1)
+roughness = 0.45
+
+[sub_resource type="BoxMesh" id="BoxMesh_motor_tz"]
+size = Vector3(0.24, 0.14, 0.22)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_battery_tz"]
+albedo_color = Color(0.92, 0.48, 0.12, 1)
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_battery_tz"]
+size = Vector3(0.2, 0.14, 0.2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rock"]
 albedo_color = Color(0.48, 0.44, 0.4, 1)
@@ -133,6 +147,16 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.2, 0, 0)
 mesh = SubResource("CylinderMesh_tw")
 surface_material_override/0 = SubResource("StandardMaterial3D_wheel")
 
+[node name="Motor" type="MeshInstance3D" parent="Machine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.2, -0.04)
+mesh = SubResource("BoxMesh_motor_tz")
+surface_material_override/0 = SubResource("StandardMaterial3D_motor_tz")
+
+[node name="Battery" type="MeshInstance3D" parent="Machine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0.19, 0.04)
+mesh = SubResource("BoxMesh_battery_tz")
+surface_material_override/0 = SubResource("StandardMaterial3D_battery_tz")
+
 [node name="Shovel" type="Node3D" parent="Machine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32, 0.1, 0.1)
 
@@ -150,6 +174,15 @@ surface_material_override/0 = SubResource("StandardMaterial3D_shovel")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, 0.04)
 mesh = SubResource("SphereMesh_core")
 surface_material_override/0 = SubResource("StandardMaterial3D_core")
+
+[node name="MachineNameLabel" type="Label3D" parent="Machine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44, 0)
+pixel_size = 0.0055
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+outline_modulate = Color(0.06, 0.06, 0.1, 0.88)
+text = "Motorcito Ayudante"
+outline_size = 8
 
 [node name="Rocks" type="Node3D" parent="."]
 
