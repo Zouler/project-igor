@@ -1,0 +1,361 @@
+[gd_scene format=3 uid="uid://3rba3c2h8jod"]
+
+[ext_resource type="Script" uid="uid://6yuf8rv1qpj8" path="res://scripts/workshop.gd" id="1_workshop"]
+[ext_resource type="Script" uid="uid://dd16kfllqqli2" path="res://scripts/build_part.gd" id="2_part"]
+[ext_resource type="Script" uid="uid://bpxo2dtds8142" path="res://scripts/build_slot.gd" id="3_slot"]
+
+[sub_resource type="Environment" id="Environment_workshop"]
+background_mode = 1
+background_color = Color(0.52, 0.46, 0.58, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.95, 0.9, 0.85, 1)
+ambient_light_energy = 0.45
+
+[sub_resource type="BoxMesh" id="BoxMesh_platform"]
+size = Vector3(4.8, 0.14, 3.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_platform"]
+albedo_color = Color(0.62, 0.48, 0.36, 1)
+roughness = 0.88
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_slot"]
+size = Vector3(0.52, 0.28, 0.52)
+
+[sub_resource type="BoxMesh" id="BoxMesh_slot_marker"]
+size = Vector3(0.52, 0.03, 0.52)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_slot"]
+transparency = 1
+albedo_color = Color(0.35, 0.75, 0.55, 0.35)
+roughness = 0.6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_base"]
+size = Vector3(0.48, 0.22, 0.48)
+
+[sub_resource type="BoxMesh" id="BoxMesh_base"]
+size = Vector3(0.48, 0.22, 0.48)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yellow"]
+albedo_color = Color(0.95, 0.82, 0.2, 1)
+roughness = 0.55
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wheel"]
+height = 0.28
+radius = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wheel"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.28
+radial_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wheel"]
+albedo_color = Color(0.18, 0.16, 0.15, 1)
+roughness = 0.65
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_motor"]
+size = Vector3(0.38, 0.32, 0.38)
+
+[sub_resource type="BoxMesh" id="BoxMesh_motor"]
+size = Vector3(0.38, 0.32, 0.38)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_motor"]
+albedo_color = Color(0.25, 0.45, 0.92, 1)
+roughness = 0.45
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_battery"]
+size = Vector3(0.36, 0.32, 0.36)
+
+[sub_resource type="BoxMesh" id="BoxMesh_battery_body"]
+size = Vector3(0.34, 0.2, 0.34)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_battery_body"]
+albedo_color = Color(0.92, 0.48, 0.12, 1)
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_battery_cap"]
+size = Vector3(0.34, 0.08, 0.34)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_battery_cap"]
+albedo_color = Color(0.12, 0.12, 0.12, 1)
+roughness = 0.35
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_shovel"]
+size = Vector3(0.5, 0.35, 0.35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_shovel_blade"]
+size = Vector3(0.42, 0.05, 0.28)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_shovel"]
+albedo_color = Color(0.55, 0.55, 0.58, 1)
+metallic = 0.35
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_shovel_handle"]
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.45
+radial_segments = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 14.0
+content_margin_bottom = 12.0
+bg_color = Color(0.15, 0.14, 0.2, 0.75)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Workshop" type="Node3D" unique_id=1536301846]
+script = ExtResource("1_workshop")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1228834598]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 3.6, 7.2)
+current = true
+fov = 55.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1378557736]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 2.5, 6, 4)
+light_color = Color(1, 0.97, 0.9, 1)
+light_energy = 1.15
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1453814118]
+environment = SubResource("Environment_workshop")
+
+[node name="BuildPlatform" type="MeshInstance3D" parent="." unique_id=2006235715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07, 0)
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("StandardMaterial3D_platform")
+
+[node name="Slots" type="Node3D" parent="." unique_id=1435363189]
+
+[node name="SlotBase" type="StaticBody3D" parent="Slots" unique_id=154926627]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65, 0.02, -0.38)
+collision_mask = 0
+script = ExtResource("3_slot")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slots/SlotBase" unique_id=1972998508]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+shape = SubResource("BoxShape3D_slot")
+
+[node name="Marker" type="MeshInstance3D" parent="Slots/SlotBase" unique_id=1544743258]
+mesh = SubResource("BoxMesh_slot_marker")
+surface_material_override/0 = SubResource("StandardMaterial3D_slot")
+
+[node name="SlotWheels" type="StaticBody3D" parent="Slots" unique_id=149247483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.82, 0.02, -0.38)
+collision_mask = 0
+script = ExtResource("3_slot")
+slot_type = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slots/SlotWheels" unique_id=1773092885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+shape = SubResource("BoxShape3D_slot")
+
+[node name="Marker" type="MeshInstance3D" parent="Slots/SlotWheels" unique_id=689105755]
+mesh = SubResource("BoxMesh_slot_marker")
+surface_material_override/0 = SubResource("StandardMaterial3D_slot")
+
+[node name="SlotMotor" type="StaticBody3D" parent="Slots" unique_id=1694942134]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.38)
+collision_mask = 0
+script = ExtResource("3_slot")
+slot_type = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slots/SlotMotor" unique_id=879250445]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+shape = SubResource("BoxShape3D_slot")
+
+[node name="Marker" type="MeshInstance3D" parent="Slots/SlotMotor" unique_id=1003082812]
+mesh = SubResource("BoxMesh_slot_marker")
+surface_material_override/0 = SubResource("StandardMaterial3D_slot")
+
+[node name="SlotBattery" type="StaticBody3D" parent="Slots" unique_id=1240109632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82, 0.02, -0.38)
+collision_mask = 0
+script = ExtResource("3_slot")
+slot_type = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slots/SlotBattery" unique_id=190612937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+shape = SubResource("BoxShape3D_slot")
+
+[node name="Marker" type="MeshInstance3D" parent="Slots/SlotBattery" unique_id=182995317]
+mesh = SubResource("BoxMesh_slot_marker")
+surface_material_override/0 = SubResource("StandardMaterial3D_slot")
+
+[node name="SlotTool" type="StaticBody3D" parent="Slots" unique_id=2126990466]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65, 0.02, -0.38)
+collision_mask = 0
+script = ExtResource("3_slot")
+slot_type = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slots/SlotTool" unique_id=2054956860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+shape = SubResource("BoxShape3D_slot")
+
+[node name="Marker" type="MeshInstance3D" parent="Slots/SlotTool" unique_id=1435616210]
+mesh = SubResource("BoxMesh_slot_marker")
+surface_material_override/0 = SubResource("StandardMaterial3D_slot")
+
+[node name="Parts" type="Node3D" parent="." unique_id=968577069]
+
+[node name="BasePart" type="StaticBody3D" parent="Parts" unique_id=1330966262]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55, 0.18, 1.05)
+collision_mask = 0
+script = ExtResource("2_part")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parts/BasePart" unique_id=2010615605]
+shape = SubResource("BoxShape3D_base")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Parts/BasePart" unique_id=2121207634]
+mesh = SubResource("BoxMesh_base")
+surface_material_override/0 = SubResource("StandardMaterial3D_yellow")
+
+[node name="WheelsPart" type="StaticBody3D" parent="Parts" unique_id=969628792]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.18, 1.05)
+collision_mask = 0
+script = ExtResource("2_part")
+part_type = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parts/WheelsPart" unique_id=528889975]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CylinderShape3D_wheel")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Parts/WheelsPart" unique_id=2139199022]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("StandardMaterial3D_wheel")
+
+[node name="MotorPart" type="StaticBody3D" parent="Parts" unique_id=1276286238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.2, 1.05)
+collision_mask = 0
+script = ExtResource("2_part")
+part_type = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parts/MotorPart" unique_id=1187573419]
+shape = SubResource("BoxShape3D_motor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Parts/MotorPart" unique_id=532116121]
+mesh = SubResource("BoxMesh_motor")
+surface_material_override/0 = SubResource("StandardMaterial3D_motor")
+
+[node name="BatteryPart" type="StaticBody3D" parent="Parts" unique_id=894179088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 0.2, 1.05)
+collision_mask = 0
+script = ExtResource("2_part")
+part_type = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parts/BatteryPart" unique_id=701866065]
+shape = SubResource("BoxShape3D_battery")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="Parts/BatteryPart" unique_id=39447718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, 0)
+mesh = SubResource("BoxMesh_battery_body")
+surface_material_override/0 = SubResource("StandardMaterial3D_battery_body")
+
+[node name="CapMesh" type="MeshInstance3D" parent="Parts/BatteryPart" unique_id=728407246]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+mesh = SubResource("BoxMesh_battery_cap")
+surface_material_override/0 = SubResource("StandardMaterial3D_battery_cap")
+
+[node name="ShovelPart" type="StaticBody3D" parent="Parts" unique_id=934149873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65, 0.2, 1.05)
+collision_mask = 0
+script = ExtResource("2_part")
+part_type = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parts/ShovelPart" unique_id=1909152181]
+shape = SubResource("BoxShape3D_shovel")
+
+[node name="Blade" type="MeshInstance3D" parent="Parts/ShovelPart" unique_id=339894199]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, -0.02, 0)
+mesh = SubResource("BoxMesh_shovel_blade")
+surface_material_override/0 = SubResource("StandardMaterial3D_shovel")
+
+[node name="Handle" type="MeshInstance3D" parent="Parts/ShovelPart" unique_id=1857910015]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.18, 0.12, 0)
+mesh = SubResource("CylinderMesh_shovel_handle")
+surface_material_override/0 = SubResource("StandardMaterial3D_shovel")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=881073155]
+
+[node name="UI" type="VBoxContainer" parent="CanvasLayer" unique_id=1716836164]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/UI" unique_id=1111057226]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.95, 0.88, 1)
+theme_override_font_sizes/font_size = 30
+text = "Taller I.G.O.R."
+
+[node name="IgorMessageLabel" type="Label" parent="CanvasLayer/UI" unique_id=1235896469]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.92, 0.9, 0.98, 1)
+theme_override_font_sizes/font_size = 20
+text = "Mensaje de I.G.O.R."
+autowrap_mode = 3
+
+[node name="ButtonRow" type="HBoxContainer" parent="CanvasLayer/UI" unique_id=1286608618]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="TestButton" type="Button" parent="CanvasLayer/UI/ButtonRow" unique_id=1237106787]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Probar"
+
+[node name="ResetButton" type="Button" parent="CanvasLayer/UI/ButtonRow" unique_id=1286608619]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Reiniciar"
+
+[node name="Spacer" type="Control" parent="CanvasLayer/UI" unique_id=392001926]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="PartsPanel" type="Panel" parent="CanvasLayer/UI" unique_id=1640382354]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HintLabel" type="Label" parent="CanvasLayer/UI/PartsPanel" unique_id=1394639694]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 12.0
+offset_right = -14.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.95, 0.93, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Piezas: toca una pieza en la mesa y luego el hueco verde que le corresponde (base, ruedas, motor, batería, herramienta)."
+autowrap_mode = 3
