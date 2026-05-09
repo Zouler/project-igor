@@ -99,4 +99,4 @@ func _on_next_pressed() -> void:
 	_next_button.disabled = true
 	_igor_label.text = _loc.t("COMMUNITY_NEXT_MESSAGE")
 	await get_tree().create_timer(1.05).timeout
-	_go_to_workshop()
+	_scene_transition.fade_to_scene("res://scenes/mission_select.tscn")

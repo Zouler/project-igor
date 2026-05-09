@@ -7,8 +7,8 @@ const DEBUG_LOGS := false
 const LocalizationScript := preload("res://scripts/localization.gd")
 
 var current_mission_id: String = "clear_first_path"
-var current_mission_title_key: String = "MISSION_CLEAR_FIRST_PATH_TITLE"
-var current_mission_description_key: String = "MISSION_CLEAR_FIRST_PATH_DESCRIPTION"
+var current_mission_title_key: String = "MISSION_1_TITLE"
+var current_mission_description_key: String = "MISSION_1_DESCRIPTION"
 var current_mission_title: String = ""
 var current_mission_description: String = ""
 
@@ -27,13 +27,25 @@ func _t(key: String) -> String:
 
 func start_first_mission() -> void:
 	current_mission_id = "clear_first_path"
-	current_mission_title_key = "MISSION_CLEAR_FIRST_PATH_TITLE"
-	current_mission_description_key = "MISSION_CLEAR_FIRST_PATH_DESCRIPTION"
+	current_mission_title_key = "MISSION_1_TITLE"
+	current_mission_description_key = "MISSION_1_DESCRIPTION"
 	current_mission_title = _t(current_mission_title_key)
 	current_mission_description = _t(current_mission_description_key)
 	mission_started = true
 	if DEBUG_LOGS:
 		print("Mission started")
+
+
+func select_first_mission() -> void:
+	if not mission_started:
+		start_first_mission()
+	else:
+		current_mission_id = "clear_first_path"
+		current_mission_title_key = "MISSION_1_TITLE"
+		current_mission_description_key = "MISSION_1_DESCRIPTION"
+		current_mission_title = _t(current_mission_title_key)
+		current_mission_description = _t(current_mission_description_key)
+	_save_progress()
 
 
 func mark_machine_built() -> void:
@@ -63,6 +75,10 @@ func reset_mission() -> void:
 	machine_built = false
 	test_completed = false
 	community_unlocked = false
+
+
+func is_second_mission_unlocked() -> bool:
+	return community_unlocked
 
 
 func get_progress_text() -> String:

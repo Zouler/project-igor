@@ -125,17 +125,17 @@ func _wakeup_pulse(n: Node3D) -> void:
 	tw.tween_property(n, "scale", base, 0.35)
 
 
-func _go_to_workshop() -> void:
-	_scene_transition.fade_to_scene("res://scenes/workshop.tscn")
+func _go_to_mission_select() -> void:
+	_scene_transition.fade_to_scene("res://scenes/mission_select.tscn")
 
 
 func _on_skip_pressed() -> void:
-	_go_to_workshop()
+	_go_to_mission_select()
 
 
 func _on_next_pressed() -> void:
 	if _step >= TOTAL_STEPS:
-		_go_to_workshop()
+		_go_to_mission_select()
 		return
 	_set_step(_step + 1)
 
