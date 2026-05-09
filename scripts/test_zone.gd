@@ -5,6 +5,7 @@ extends Node3D
 const BuildStateScript := preload("res://scripts/build_state.gd")
 const MissionStateScript := preload("res://scripts/mission_state.gd")
 const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
+const LocalizationScript := preload("res://scripts/localization.gd")
 
 const DEBUG_LOGS := false
 
@@ -16,6 +17,7 @@ const DEBUG_LOGS := false
 var _build_state: BuildStateScript
 var _mission_state: MissionStateScript
 var _scene_transition: SceneTransitionScript
+var _loc: LocalizationScript
 var test_running: bool = false
 var test_completed: bool = false
 
@@ -24,16 +26,36 @@ func _ready() -> void:
 	_build_state = get_node("/root/BuildState") as BuildStateScript
 	_mission_state = get_node("/root/MissionState") as MissionStateScript
 	_scene_transition = get_node("/root/SceneTransition") as SceneTransitionScript
+	_loc = get_node("/root/Localization") as LocalizationScript
 	_setup_camera()
 	_apply_machine_from_build_state()
 	_reset_mission_visuals()
-	_igor_label.text = "Probemos la nueva máquina."
+	_apply_localized_text()
 	_start_button.pressed.connect(_on_start_pressed)
 	_continue_button.pressed.connect(_on_continue_pressed)
 	_back_button.pressed.connect(_on_back_pressed)
 	_apply_button_feedback(_start_button)
 	_apply_button_feedback(_continue_button)
 	_apply_button_feedback(_back_button)
+
+
+func _apply_localized_text() -> void:
+	var title := get_node_or_null("CanvasLayer/UI/TitleLabel") as Label
+	if title != null:
+		title.text = _loc.t("TEST_TITLE")
+	_start_button.text = _loc.t("TEST_BUTTON_START")
+	_back_button.text = _loc.t("TEST_BUTTON_BACK")
+	_continue_button.text = _loc.t("TEST_BUTTON_CONTINUE")
+	_igor_label.text = _loc.t("TEST_INITIAL_MESSAGE")
+	var hint := get_node_or_null("CanvasLayer/UI/HintPanel/HintLabel") as Label
+	if hint != null:
+		hint.text = _loc.t("TEST_HINT")
+	var sign_label := get_node_or_null("SuccessSign") as Label3D
+	if sign_label != null:
+		sign_label.text = _loc.t("TEST_SIGN_READY")
+	var machine_label := get_node_or_null("Machine/MachineNameLabel") as Label3D
+	if machine_label != null:
+		machine_label.text = _loc.t("TEST_MACHINE_LABEL")
 
 
 func _reset_mission_visuals() -> void:
@@ -108,7 +130,7 @@ func _on_start_pressed() -> void:
 	if DEBUG_LOGS:
 		print("Test started")
 	_start_button.disabled = true
-	_igor_label.text = "¡Mira! El motorcito está ayudando."
+	_igor_label.text = _loc.t("TEST_START_MESSAGE")
 	await _run_clear_path_demo()
 	test_running = false
 	test_completed = true
@@ -120,7 +142,7 @@ func _on_start_pressed() -> void:
 	$ClearedPath.visible = true
 	$SuccessSign.visible = true
 	$RewardGear.visible = true
-	_igor_label.text = "¡Camino despejado! El planeta empieza a despertar."
+	_igor_label.text = _loc.t("TEST_SUCCESS_MESSAGE")
 	_start_button.visible = false
 	_continue_button.visible = true
 	_play_reward_pulse()

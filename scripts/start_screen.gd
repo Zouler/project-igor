@@ -5,9 +5,12 @@ extends Node3D
 const BuildStateScript := preload("res://scripts/build_state.gd")
 const MissionStateScript := preload("res://scripts/mission_state.gd")
 const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
+const LocalizationScript := preload("res://scripts/localization.gd")
 
 const DEBUG_LOGS := false
 
+@onready var _title_label: Label = $CanvasLayer/UI/TitleLabel
+@onready var _subtitle_label: Label = $CanvasLayer/UI/SubtitleLabel
 @onready var _footer_label: Label = %SmallFooterLabel
 @onready var _start_button: Button = %StartButton
 @onready var _continue_button: Button = %ContinueButton
@@ -16,13 +19,16 @@ const DEBUG_LOGS := false
 var _build_state: BuildStateScript
 var _mission_state: MissionStateScript
 var _scene_transition: SceneTransitionScript
+var _loc: LocalizationScript
 
 
 func _ready() -> void:
 	_build_state = get_node("/root/BuildState") as BuildStateScript
 	_mission_state = get_node("/root/MissionState") as MissionStateScript
 	_scene_transition = get_node("/root/SceneTransition") as SceneTransitionScript
+	_loc = get_node("/root/Localization") as LocalizationScript
 	_setup_camera()
+	_apply_localized_text()
 	_start_button.pressed.connect(_on_start_pressed)
 	_continue_button.pressed.connect(_on_continue_pressed)
 	_reset_button.pressed.connect(_on_reset_demo_pressed)
@@ -63,11 +69,20 @@ func _apply_button_feedback(b: Button) -> void:
 	)
 
 
+func _apply_localized_text() -> void:
+	_title_label.text = _loc.t("START_TITLE")
+	_subtitle_label.text = _loc.t("START_SUBTITLE")
+	_start_button.text = _loc.t("START_BUTTON_NEW")
+	_continue_button.text = _loc.t("START_BUTTON_CONTINUE")
+	_reset_button.text = _loc.t("START_BUTTON_RESET")
+	_footer_label.text = _loc.t("START_FOOTER")
+
+
 func _on_start_pressed() -> void:
 	_build_state.reset()
 	_mission_state.reset_mission()
 	_mission_state.start_first_mission()
-	_go_to_workshop()
+	_scene_transition.fade_to_scene("res://scenes/story_intro.tscn")
 
 
 func _on_continue_pressed() -> void:
@@ -77,7 +92,7 @@ func _on_continue_pressed() -> void:
 func _on_reset_demo_pressed() -> void:
 	_build_state.reset()
 	_mission_state.reset_mission()
-	_footer_label.text = "Demo reiniciada."
+	_footer_label.text = _loc.t("START_DEMO_RESET")
 	if DEBUG_LOGS:
 		print("Demo reset")
 

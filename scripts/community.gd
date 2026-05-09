@@ -4,6 +4,7 @@ extends Node3D
 
 const MissionStateScript := preload("res://scripts/mission_state.gd")
 const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
+const LocalizationScript := preload("res://scripts/localization.gd")
 
 const DEBUG_LOGS := false
 
@@ -15,14 +16,15 @@ const DEBUG_LOGS := false
 
 var _mission_state: MissionStateScript
 var _scene_transition: SceneTransitionScript
+var _loc: LocalizationScript
 
 
 func _ready() -> void:
 	_mission_state = get_node("/root/MissionState") as MissionStateScript
 	_scene_transition = get_node("/root/SceneTransition") as SceneTransitionScript
+	_loc = get_node("/root/Localization") as LocalizationScript
 	_setup_camera()
-	_igor_label.text = "Una parte del planeta volvió a moverse."
-	_progress_label.text = "Progreso del planeta: 1%"
+	_apply_localized_text()
 	_back_button.pressed.connect(_on_back_pressed)
 	_next_button.pressed.connect(_on_next_pressed)
 	_apply_button_feedback(_back_button)
@@ -34,6 +36,20 @@ func _ready() -> void:
 		print("MissionState: community unlocked")
 
 	_mission_status_label.visible = _mission_state.community_unlocked
+
+
+func _apply_localized_text() -> void:
+	var title := get_node_or_null("CanvasLayer/UI/TitleLabel") as Label
+	if title != null:
+		title.text = _loc.t("COMMUNITY_TITLE")
+	_igor_label.text = _loc.t("COMMUNITY_MESSAGE")
+	_progress_label.text = _loc.t("COMMUNITY_PROGRESS")
+	_mission_status_label.text = _loc.t("COMMUNITY_MISSION_COMPLETED")
+	_back_button.text = _loc.t("COMMUNITY_BUTTON_BACK")
+	_next_button.text = _loc.t("COMMUNITY_BUTTON_NEXT")
+	var hint := get_node_or_null("CanvasLayer/UI/HintPanel/HintLabel") as Label
+	if hint != null:
+		hint.text = _loc.t("COMMUNITY_HINT")
 
 
 func _setup_camera() -> void:
@@ -81,6 +97,6 @@ func _on_next_pressed() -> void:
 	if _next_button.disabled:
 		return
 	_next_button.disabled = true
-	_igor_label.text = "Pronto construiremos algo nuevo."
+	_igor_label.text = _loc.t("COMMUNITY_NEXT_MESSAGE")
 	await get_tree().create_timer(1.05).timeout
 	_go_to_workshop()

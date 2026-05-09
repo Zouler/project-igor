@@ -5,6 +5,7 @@ extends Node3D
 const BuildStateScript := preload("res://scripts/build_state.gd")
 const MissionStateScript := preload("res://scripts/mission_state.gd")
 const SceneTransitionScript := preload("res://scripts/scene_transition.gd")
+const LocalizationScript := preload("res://scripts/localization.gd")
 
 const DEBUG_LOGS := false
 
@@ -31,6 +32,7 @@ var _igor_guide: RefCounted
 var _build_state: BuildStateScript
 var _mission_state: MissionStateScript
 var _scene_transition: SceneTransitionScript
+var _loc: LocalizationScript
 ## Transform local inicial de cada pieza respecto a Parts (para Reiniciar).
 var _part_initial_transform: Dictionary = {}
 ## Evita programar varias veces el cambio a la zona de prueba si se aprieta Probar repetidamente.
@@ -65,14 +67,19 @@ func _ready() -> void:
 	_build_state = get_node("/root/BuildState") as BuildStateScript
 	_mission_state = get_node("/root/MissionState") as MissionStateScript
 	_scene_transition = get_node("/root/SceneTransition") as SceneTransitionScript
+	_loc = get_node("/root/Localization") as LocalizationScript
 	_igor_guide = IgorGuideScript.new()
 	_setup_camera()
-	_title_label.text = "Taller I.G.O.R."
-	set_igor_message("Este motorcito necesita un cuerpo. Elegí una pieza para empezar.")
+	_title_label.text = _loc.t("WORKSHOP_TITLE")
+	_test_button.text = _loc.t("WORKSHOP_BUTTON_TEST")
+	_reset_button.text = _loc.t("WORKSHOP_BUTTON_RESET")
+	_mission_label.text = _loc.t("WORKSHOP_MISSION_LABEL")
+	_set_workshop_labels()
+	set_igor_message(_loc.t("WORKSHOP_MOTORLING_INTRO"))
 
 	if not _mission_state.mission_started:
 		_mission_state.start_first_mission()
-	_mission_label.text = "Misión: %s" % _mission_state.current_mission_title
+	# MissionLabel ya está localizado arriba.
 
 	_validation_slots = [
 		$Slots/SlotBase,
@@ -151,31 +158,52 @@ func _set_tutorial_step(step: int) -> void:
 func _get_tutorial_message_for_step(step: int) -> String:
 	match step:
 		STEP_SELECT_BASE:
-			return "Primero elegí la base."
+			return _loc.t("WORKSHOP_SELECT_BASE")
 		STEP_PLACE_BASE:
-			return "Ahora ponela en el hueco de Base."
+			return _loc.t("WORKSHOP_PLACE_BASE")
 		STEP_SELECT_WHEELS:
-			return "Ahora elegí las ruedas."
+			return _loc.t("WORKSHOP_SELECT_WHEELS")
 		STEP_PLACE_WHEELS:
-			return "Ponelas en el hueco de Ruedas."
+			return _loc.t("WORKSHOP_PLACE_WHEELS")
 		STEP_SELECT_MOTOR:
-			return "Elegí el motor."
+			return _loc.t("WORKSHOP_SELECT_MOTOR")
 		STEP_PLACE_MOTOR:
-			return "Ponelo en el hueco de Motor."
+			return _loc.t("WORKSHOP_PLACE_MOTOR")
 		STEP_SELECT_BATTERY:
-			return "Elegí la batería."
+			return _loc.t("WORKSHOP_SELECT_BATTERY")
 		STEP_PLACE_BATTERY:
-			return "Ponela en el hueco de Batería."
+			return _loc.t("WORKSHOP_PLACE_BATTERY")
 		STEP_SELECT_TOOL:
-			return "Elegí la pala."
+			return _loc.t("WORKSHOP_SELECT_TOOL")
 		STEP_PLACE_TOOL:
-			return "Ponela en el hueco de Herramienta."
+			return _loc.t("WORKSHOP_PLACE_TOOL")
 		STEP_PRESS_TEST:
-			return "¡Listo! Ahora toquemos Probar."
+			return _loc.t("WORKSHOP_PRESS_TEST")
 		STEP_DONE:
-			return "¡La máquina está lista!"
+			return _loc.t("WORKSHOP_DONE")
 		_:
-			return "Primero elegí la base."
+			return _loc.t("WORKSHOP_SELECT_BASE")
+
+
+func _set_workshop_labels() -> void:
+	# Part labels
+	($Parts/BasePart/PartLabel as Label3D).text = _loc.t("PART_BASE")
+	($Parts/WheelsPart/PartLabel as Label3D).text = _loc.t("PART_WHEELS")
+	($Parts/MotorPart/PartLabel as Label3D).text = _loc.t("PART_MOTOR")
+	($Parts/BatteryPart/PartLabel as Label3D).text = _loc.t("PART_BATTERY")
+	($Parts/ShovelPart/PartLabel as Label3D).text = _loc.t("PART_SHOVEL")
+	# Slot labels
+	($Slots/SlotBase/SlotLabel as Label3D).text = _loc.t("SLOT_BASE")
+	($Slots/SlotWheels/SlotLabel as Label3D).text = _loc.t("SLOT_WHEELS")
+	($Slots/SlotMotor/SlotLabel as Label3D).text = _loc.t("SLOT_MOTOR")
+	($Slots/SlotBattery/SlotLabel as Label3D).text = _loc.t("SLOT_BATTERY")
+	($Slots/SlotTool/SlotLabel as Label3D).text = _loc.t("SLOT_TOOL")
+	# Motorling label
+	($MotorlingPlaceholder/MotorlingLabel as Label3D).text = _loc.t("MOTORLING_LABEL")
+	# Hint panel label
+	var hint := get_node_or_null("CanvasLayer/UI/PartsPanel/HintLabel") as Label
+	if hint != null:
+		hint.text = _loc.t("WORKSHOP_HINT")
 
 
 func _sync_tutorial_step_from_slots() -> void:
@@ -340,7 +368,7 @@ func _on_part_clicked(part: Node) -> void:
 	# Si la guía espera una pieza específica, avisamos si eligen otra.
 	var expected_part := _get_part_for_step(_tutorial_step)
 	if expected_part != null and expected_part != part:
-		set_igor_message("Esa pieza la usamos después.")
+		set_igor_message(_loc.t("WORKSHOP_WRONG_PART"))
 		_update_tutorial_highlights()
 		# Igual permitimos seleccionar, pero no avanzamos el tutorial.
 
@@ -350,6 +378,7 @@ func _on_part_clicked(part: Node) -> void:
 	_selected_part = part
 	if part.has_method("set_selected_visual"):
 		part.set_selected_visual(true)
+	set_igor_message(_loc.t("WORKSHOP_PART_READY"))
 	_sync_tutorial_step_from_slots()
 
 
@@ -361,17 +390,17 @@ func _on_slot_clicked(slot: Node) -> void:
 		return
 
 	if slot.placed_part != null:
-		set_igor_message("Ese lugar ya tiene una pieza.")
+		set_igor_message(_loc.t("WORKSHOP_SLOT_OCCUPIED"))
 		return
 
 	# Si el tutorial espera un hueco específico, y tocan otro, mostramos una pista extra.
 	var expected_slot := _get_slot_for_step(_tutorial_step)
 	if expected_slot != null and expected_slot != slot:
-		set_igor_message("Probemos en el hueco correcto.")
+		set_igor_message(_loc.t("WORKSHOP_WRONG_SLOT"))
 		_update_tutorial_highlights()
 
 	if _selected_part.part_type != slot.slot_type:
-		set_igor_message("Esa pieza va en otro hueco.")
+		set_igor_message(_loc.t("WORKSHOP_WRONG_SLOT_PART"))
 		if slot.has_method("flash_error"):
 			slot.flash_error()
 		return
@@ -404,8 +433,10 @@ func _on_slot_clicked(slot: Node) -> void:
 		var motorling := get_node_or_null("MotorlingPlaceholder")
 		if dock != null and motorling != null and motorling.has_method("move_to_dock"):
 			motorling.move_to_dock(dock)
+		set_igor_message(_loc.t("WORKSHOP_MOTORLING_FOUND_BASE"))
 		_sync_tutorial_step_from_slots()
 	else:
+		set_igor_message(_loc.t("WORKSHOP_PART_PLACED"))
 		_sync_tutorial_step_from_slots()
 
 
@@ -454,6 +485,7 @@ func _pulse_placed_parts_happy() -> void:
 func _on_reset_pressed() -> void:
 	_test_zone_transition_scheduled = false
 	_build_state.reset()
+	set_igor_message(_loc.t("WORKSHOP_SELECT_BASE"))
 	_set_tutorial_step(STEP_SELECT_BASE)
 	_clear_selection_visual()
 

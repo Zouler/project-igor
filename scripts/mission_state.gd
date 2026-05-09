@@ -4,9 +4,13 @@ extends Node
 
 const DEBUG_LOGS := false
 
+const LocalizationScript := preload("res://scripts/localization.gd")
+
 var current_mission_id: String = "clear_first_path"
-var current_mission_title: String = "Despejar el primer camino"
-var current_mission_description: String = "Construí una máquina con pala para mover las piedras."
+var current_mission_title_key: String = "MISSION_CLEAR_FIRST_PATH_TITLE"
+var current_mission_description_key: String = "MISSION_CLEAR_FIRST_PATH_DESCRIPTION"
+var current_mission_title: String = ""
+var current_mission_description: String = ""
 
 var mission_started: bool = false
 var machine_built: bool = false
@@ -14,10 +18,19 @@ var test_completed: bool = false
 var community_unlocked: bool = false
 
 
+func _t(key: String) -> String:
+	var loc := get_node_or_null("/root/Localization") as LocalizationScript
+	if loc == null:
+		return key
+	return loc.t(key)
+
+
 func start_first_mission() -> void:
 	current_mission_id = "clear_first_path"
-	current_mission_title = "Despejar el primer camino"
-	current_mission_description = "Construí una máquina con pala para mover las piedras."
+	current_mission_title_key = "MISSION_CLEAR_FIRST_PATH_TITLE"
+	current_mission_description_key = "MISSION_CLEAR_FIRST_PATH_DESCRIPTION"
+	current_mission_title = _t(current_mission_title_key)
+	current_mission_description = _t(current_mission_description_key)
 	mission_started = true
 	if DEBUG_LOGS:
 		print("Mission started")
@@ -44,12 +57,12 @@ func reset_mission() -> void:
 
 func get_progress_text() -> String:
 	if mission_started and not machine_built:
-		return "Paso 1: Construí una máquina."
+		return _t("MISSION_STEP_BUILD")
 	if machine_built and not test_completed:
-		return "Paso 2: Probá la máquina."
+		return _t("MISSION_STEP_TEST")
 	if test_completed and not community_unlocked:
-		return "Paso 3: Mirá cómo mejora el planeta."
+		return _t("MISSION_STEP_COMMUNITY")
 	if community_unlocked:
-		return "Primera misión completada."
+		return _t("MISSION_COMPLETED_FIRST")
 	return ""
 
