@@ -38,14 +38,24 @@ func start_first_mission() -> void:
 
 func mark_machine_built() -> void:
 	machine_built = true
+	_save_progress()
 
 
 func mark_test_completed() -> void:
 	test_completed = true
+	_save_progress()
 
 
 func mark_community_unlocked() -> void:
 	community_unlocked = true
+	_save_progress()
+
+
+func _save_progress() -> void:
+	if Engine.has_singleton("SaveManager"):
+		var sm := Engine.get_singleton("SaveManager")
+		if sm != null and sm.has_method("save_game"):
+			sm.call("save_game")
 
 
 func reset_mission() -> void:

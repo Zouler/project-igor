@@ -1,5 +1,7 @@
 extends Node
 
+signal locale_changed
+
 ## Localización simple (MVP 1.4): diccionarios en memoria, sin archivos externos aún.
 
 const DEBUG_LOGS := false
@@ -8,13 +10,20 @@ var current_locale: String = "en"
 
 var translations := {
 	"en": {
+		"LANGUAGE_LABEL": "Language",
+		"LANGUAGE_ENGLISH": "English",
+		"LANGUAGE_SPANISH": "Spanish",
 		"START_TITLE": "Project I.G.O.R.",
 		"START_SUBTITLE": "Inventive Guide Operating Robot",
 		"START_BUTTON_NEW": "Start",
 		"START_BUTTON_CONTINUE": "Continue",
 		"START_BUTTON_RESET": "Reset demo",
+		"START_BUTTON_SETTINGS": "Settings",
 		"START_FOOTER": "Build machines. Help the planet.",
 		"START_DEMO_RESET": "Demo reset.",
+		"START_NO_PROGRESS": "No saved progress yet.",
+		"SETTINGS_TITLE": "Settings",
+		"SETTINGS_CLOSE": "Close",
 
 		"WORKSHOP_TITLE": "Project I.G.O.R. - Workshop",
 		"WORKSHOP_MISSION_LABEL": "Mission: Clear the first path",
@@ -102,13 +111,20 @@ var translations := {
 		"STORY_STEP_9": "To get back home, he would build machines and wake the planet."
 	},
 	"es": {
+		"LANGUAGE_LABEL": "Idioma",
+		"LANGUAGE_ENGLISH": "Inglés",
+		"LANGUAGE_SPANISH": "Español",
 		"START_TITLE": "Proyecto I.G.O.R.",
 		"START_SUBTITLE": "Inventive Guide Operating Robot",
 		"START_BUTTON_NEW": "Empezar",
 		"START_BUTTON_CONTINUE": "Continuar",
 		"START_BUTTON_RESET": "Reiniciar demo",
+		"START_BUTTON_SETTINGS": "Opciones",
 		"START_FOOTER": "Construí máquinas. Ayudá al planeta.",
 		"START_DEMO_RESET": "Demo reiniciada.",
+		"START_NO_PROGRESS": "Todavía no hay progreso guardado.",
+		"SETTINGS_TITLE": "Opciones",
+		"SETTINGS_CLOSE": "Cerrar",
 
 		"WORKSHOP_TITLE": "Proyecto I.G.O.R. - Taller",
 		"WORKSHOP_MISSION_LABEL": "Misión: Despejar el primer camino",
@@ -199,19 +215,29 @@ var translations := {
 
 
 func set_locale(locale: String) -> void:
-	if translations.has(locale):
-		current_locale = locale
-		if DEBUG_LOGS:
-			print("Localization locale set: ", locale)
+	if not translations.has(locale):
+		return
+	if current_locale == locale:
+		return
+	current_locale = locale
+	emit_signal("locale_changed")
+	if DEBUG_LOGS:
+		print("Localization locale set: ", locale)
+	# Guardar locale si existe SaveManager.
+	if Engine.has_singleton("SaveManager"):
+		var sm := Engine.get_singleton("SaveManager")
+		if sm != null and sm.has_method("save_game"):
+			sm.call("save_game")
+
+
+func get_locale() -> String:
+	return current_locale
 
 
 func t(key: String) -> String:
-	var locale_map = translations.get(current_locale, null)
-	if typeof(locale_map) == TYPE_DICTIONARY and (locale_map as Dictionary).has(key):
-		return (locale_map as Dictionary)[key]
-	# Fallback a inglés si existe
-	var en_map = translations.get("en", null)
-	if typeof(en_map) == TYPE_DICTIONARY and (en_map as Dictionary).has(key):
-		return (en_map as Dictionary)[key]
+	if translations.has(current_locale) and (translations[current_locale] as Dictionary).has(key):
+		return (translations[current_locale] as Dictionary)[key]
+	if translations.has("en") and (translations["en"] as Dictionary).has(key):
+		return (translations["en"] as Dictionary)[key]
 	return key
 

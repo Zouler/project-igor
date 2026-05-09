@@ -21,6 +21,7 @@ BuildState="*res://scripts/build_state.gd"
 MissionState="*res://scripts/mission_state.gd"
 SceneTransition="*res://scripts/scene_transition.gd"
 Localization="*res://scripts/localization.gd"
+SaveManager="*res://scripts/save_manager.gd"
 
 [physics]
 

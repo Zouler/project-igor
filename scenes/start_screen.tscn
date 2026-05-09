@@ -260,12 +260,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Continuar"
 
-[node name="ResetDemoButton" type="Button" parent="CanvasLayer/UI/ButtonPanel/Buttons"]
+[node name="SettingsButton" type="Button" parent="CanvasLayer/UI/ButtonPanel/Buttons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "Reiniciar demo"
+text = "Settings"
 
 [node name="Spacer" type="Control" parent="CanvasLayer/UI"]
 layout_mode = 2
@@ -279,4 +279,74 @@ mouse_filter = 2
 theme_override_colors/font_color = Color(0.16, 0.14, 0.2, 1)
 theme_override_font_sizes/font_size = 16
 text = "Construí máquinas. Ayudá al planeta."
+
+[node name="SettingsPanel" type="Panel" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_start")
+
+[node name="SettingsContent" type="VBoxContainer" parent="CanvasLayer/UI/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 12.0
+offset_right = -14.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="SettingsTitleLabel" type="Label" parent="CanvasLayer/UI/SettingsPanel/SettingsContent"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Settings"
+
+[node name="LanguageRow" type="HBoxContainer" parent="CanvasLayer/UI/SettingsPanel/SettingsContent"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="LanguageLabel" type="Label" parent="CanvasLayer/UI/SettingsPanel/SettingsContent/LanguageRow"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "Language"
+
+[node name="LanguageEnglishButton" type="Button" parent="CanvasLayer/UI/SettingsPanel/SettingsContent/LanguageRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "English"
+
+[node name="LanguageSpanishButton" type="Button" parent="CanvasLayer/UI/SettingsPanel/SettingsContent/LanguageRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Español"
+
+[node name="ResetDemoButton" type="Button" parent="CanvasLayer/UI/SettingsPanel/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Reiniciar demo"
+
+[node name="CloseSettingsButton" type="Button" parent="CanvasLayer/UI/SettingsPanel/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Close"
 
