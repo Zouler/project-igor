@@ -88,6 +88,30 @@ radius = 0.15
 height = 0.3
 radial_segments = 10
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cleared"]
+albedo_color = Color(0.78, 0.92, 0.62, 1)
+roughness = 0.38
+
+[sub_resource type="BoxMesh" id="BoxMesh_cleared"]
+size = Vector3(1.4, 0.045, 7.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_reward"]
+albedo_color = Color(0.95, 0.82, 0.22, 1)
+metallic = 0.45
+roughness = 0.35
+emission_enabled = true
+emission = Color(1, 0.88, 0.28, 1)
+emission_energy_multiplier = 2.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gear"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.05
+radial_segments = 14
+
+[sub_resource type="BoxMesh" id="BoxMesh_gear_tooth"]
+size = Vector3(0.05, 0.05, 0.06)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tz"]
 bg_color = Color(0.12, 0.14, 0.2, 0.72)
 corner_radius_top_left = 8
@@ -125,6 +149,50 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ground")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0.55)
 mesh = SubResource("BoxMesh_path")
 surface_material_override/0 = SubResource("StandardMaterial3D_path")
+
+[node name="ClearedPath" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.024, 0.55)
+visible = false
+mesh = SubResource("BoxMesh_cleared")
+surface_material_override/0 = SubResource("StandardMaterial3D_cleared")
+
+[node name="SuccessSign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0.52, 2.15)
+visible = false
+pixel_size = 0.0048
+billboard = 1
+modulate = Color(0.95, 1, 0.88, 1)
+outline_modulate = Color(0.05, 0.12, 0.08, 0.9)
+text = "Camino listo"
+outline_size = 7
+
+[node name="RewardGear" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42, 0.14, 3.05)
+visible = false
+
+[node name="GearDisc" type="MeshInstance3D" parent="RewardGear"]
+mesh = SubResource("CylinderMesh_gear")
+surface_material_override/0 = SubResource("StandardMaterial3D_reward")
+
+[node name="ToothN" type="MeshInstance3D" parent="RewardGear"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.14)
+mesh = SubResource("BoxMesh_gear_tooth")
+surface_material_override/0 = SubResource("StandardMaterial3D_reward")
+
+[node name="ToothS" type="MeshInstance3D" parent="RewardGear"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.14)
+mesh = SubResource("BoxMesh_gear_tooth")
+surface_material_override/0 = SubResource("StandardMaterial3D_reward")
+
+[node name="ToothE" type="MeshInstance3D" parent="RewardGear"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 0.03, 0)
+mesh = SubResource("BoxMesh_gear_tooth")
+surface_material_override/0 = SubResource("StandardMaterial3D_reward")
+
+[node name="ToothW" type="MeshInstance3D" parent="RewardGear"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, 0.03, 0)
+mesh = SubResource("BoxMesh_gear_tooth")
+surface_material_override/0 = SubResource("StandardMaterial3D_reward")
 
 [node name="Machine" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, -1.32)
@@ -247,6 +315,14 @@ custom_minimum_size = Vector2(200, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "¡Probar máquina!"
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer/UI/ButtonRow"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Continuar"
 
 [node name="BackToWorkshopButton" type="Button" parent="CanvasLayer/UI/ButtonRow"]
 unique_name_in_owner = true
