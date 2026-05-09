@@ -19,13 +19,26 @@ The **core loop** is playable: **Start Screen → Story Intro → Mission Select
 
 ## Documentation
 
+### Vision and design
+
+| Doc | Description |
+|-----|-------------|
+| [docs/VISUAL_IDENTITY.md](docs/VISUAL_IDENTITY.md) | Visual identity bible v1 (pillars, I.G.O.R., world, UI, materials) |
+| [docs/VISUAL_IDENTITY_TODO.md](docs/VISUAL_IDENTITY_TODO.md) | Governance note + link to the evolving visual bible |
+| [docs/GAMEPLAY_VISION.md](docs/GAMEPLAY_VISION.md) | Core loop, workshop vs construction, tablet-first goals |
+| [docs/WORLD_AND_PROGRESSION.md](docs/WORLD_AND_PROGRESSION.md) | Planet map, terrain roles, civilization, ship endgame tone |
+| [docs/IGOR_CHARACTER_DESIGN.md](docs/IGOR_CHARACTER_DESIGN.md) | Emotional design, feedback philosophy, future IgorReactionSystem |
+| [docs/MACHINE_SYSTEM.md](docs/MACHINE_SYSTEM.md) | Motorlings, parts taxonomy, machine families, playful failure |
+| [docs/FUTURE_MODULES.md](docs/FUTURE_MODULES.md) | Play-with-I.G.O.R., construction, scavenger, facilities, ship, M3 |
+
+### Technical and process
+
 | Doc | Description |
 |-----|-------------|
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Flow, scenes, autoloads, BuildState vs MissionState, save, localization overview |
 | [docs/MISSIONS.md](docs/MISSIONS.md) | Mission 1 & 2 design notes, Mission 3 placeholder, rules for future missions |
 | [docs/LOCALIZATION.md](docs/LOCALIZATION.md) | Keys, `t("KEY")`, save behavior for language |
 | [docs/DEV_CHECKLIST.md](docs/DEV_CHECKLIST.md) | Pre-commit manual test checklist |
-| [docs/VISUAL_IDENTITY_TODO.md](docs/VISUAL_IDENTITY_TODO.md) | Placeholder: art direction not finalized |
 
 ## License / credits
 

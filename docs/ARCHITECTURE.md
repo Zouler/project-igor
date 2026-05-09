@@ -104,4 +104,4 @@ Registered in `project.godot` under `[autoload]`. Access via `/root/<Name>` or g
 
 ## Visuals (current)
 
-- **Primitive meshes** and simple materials in scenes; no mandate for final art. Identity work is deferred; see **[VISUAL_IDENTITY_TODO.md](./VISUAL_IDENTITY_TODO.md)**.
+- **Primitive meshes** and simple materials in scenes; in-engine look is still placeholder. Target art direction is documented in **[VISUAL_IDENTITY.md](./VISUAL_IDENTITY.md)**; governance / approval reminders in **[VISUAL_IDENTITY_TODO.md](./VISUAL_IDENTITY_TODO.md)**.
