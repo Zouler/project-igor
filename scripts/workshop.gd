@@ -2,6 +2,8 @@ extends Node3D
 
 ## Escena principal 3D del taller: selección de pieza + click en slot, validación con «Probar».
 
+const DBG_WORKSHOP := false ## Poné en true para ver señales (prefijo [IGOR workshop]).
+
 const IgorGuideScript := preload("res://scripts/igor_guide.gd")
 
 @onready var _igor_label: Label = %IgorMessageLabel
@@ -20,7 +22,7 @@ func _ready() -> void:
 	_igor_guide = IgorGuideScript.new()
 	_setup_camera()
 	_title_label.text = "Taller I.G.O.R."
-	set_igor_message("Elegí una pieza para empezar.")
+	set_igor_message("Este motorcito necesita un cuerpo. Elegí una pieza para empezar.")
 
 	_validation_slots = [
 		$Slots/SlotBase,
@@ -46,8 +48,10 @@ func _ready() -> void:
 func _setup_camera() -> void:
 	var cam := $Camera3D as Camera3D
 	cam.current = true
-	cam.position = Vector3(0.0, 3.6, 7.2)
-	cam.look_at(Vector3(0.0, 0.2, 0.0), Vector3.UP)
+	# Encuadre más amplio: mesa, huecos y piezas visibles sin que la UI tape el centro.
+	cam.fov = 52.0
+	cam.position = Vector3(0.15, 3.45, 8.35)
+	cam.look_at(Vector3(0.0, 0.12, -0.08), Vector3.UP)
 
 
 func set_igor_message(text: String) -> void:
@@ -61,7 +65,8 @@ func _clear_selection_visual() -> void:
 
 
 func _on_part_clicked(part: Node) -> void:
-	print("Workshop: part_selected signal -> ", part.name)
+	if DBG_WORKSHOP:
+		print("[IGOR workshop] part_selected -> ", part.name)
 	if part.is_placed:
 		return
 	if _selected_part != null and _selected_part != part:
@@ -74,9 +79,10 @@ func _on_part_clicked(part: Node) -> void:
 
 
 func _on_slot_clicked(slot: Node) -> void:
-	print("Workshop: slot_selected signal -> ", slot.name)
+	if DBG_WORKSHOP:
+		print("[IGOR workshop] slot_selected -> ", slot.name)
 	if _selected_part == null:
-		set_igor_message("Elegí una pieza para empezar.")
+		set_igor_message("Este motorcito necesita un cuerpo. Elegí una pieza para empezar.")
 		return
 
 	if slot.placed_part != null:
@@ -100,6 +106,8 @@ func _on_slot_clicked(slot: Node) -> void:
 	part_node.position = Vector3(0.0, 0.22, 0.0)
 	part_node.rotation = Vector3.ZERO
 	part_node.scale = Vector3.ONE
+	if slot.has_method("flash_success"):
+		slot.flash_success()
 	set_igor_message("¡Muy bien! Esa pieza encajó.")
 
 
@@ -122,6 +130,8 @@ func _on_reset_pressed() -> void:
 		if part is Node3D:
 			var n3 := part as Node3D
 			n3.transform = _part_initial_transform[part] as Transform3D
+		if part.has_method("sync_idle_after_reset"):
+			part.sync_idle_after_reset()
 		if part.has_method("set_selected_visual"):
 			part.set_selected_visual(false)
 	set_igor_message("Volvamos a intentarlo.")

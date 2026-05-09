@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://6yuf8rv1qpj8" path="res://scripts/workshop.gd" id="1_workshop"]
 [ext_resource type="Script" uid="uid://dd16kfllqqli2" path="res://scripts/build_part.gd" id="2_part"]
 [ext_resource type="Script" uid="uid://bpxo2dtds8142" path="res://scripts/build_slot.gd" id="3_slot"]
+[ext_resource type="Script" uid="uid://ei5xrk3v5nil" path="res://scripts/motorling_placeholder.gd" id="4_motorling"]
 
 [sub_resource type="Environment" id="Environment_workshop"]
 background_mode = 1
@@ -17,6 +18,92 @@ size = Vector3(4.8, 0.14, 3.4)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_platform"]
 albedo_color = Color(0.62, 0.48, 0.36, 1)
 roughness = 0.88
+
+[sub_resource type="BoxMesh" id="BoxMesh_igor_body"]
+size = Vector3(0.38, 0.42, 0.26)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igor_yellow"]
+albedo_color = Color(0.95, 0.82, 0.15, 1)
+roughness = 0.45
+
+[sub_resource type="BoxMesh" id="BoxMesh_igor_head"]
+size = Vector3(0.26, 0.22, 0.24)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igor_head"]
+albedo_color = Color(0.78, 0.76, 0.82, 1)
+roughness = 0.55
+
+[sub_resource type="SphereMesh" id="SphereMesh_igor_eye"]
+radius = 0.045
+height = 0.09
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igor_dark"]
+albedo_color = Color(0.1, 0.1, 0.12, 1)
+roughness = 0.42
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_igor_antenna"]
+top_radius = 0.018
+bottom_radius = 0.018
+height = 0.12
+radial_segments = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igor_antenna"]
+albedo_color = Color(0.92, 0.42, 0.18, 1)
+metallic = 0.25
+roughness = 0.45
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_motorling"]
+radius = 0.092
+height = 0.19
+radial_segments = 12
+rings = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_motorling_body"]
+albedo_color = Color(0.98, 0.66, 0.18, 1)
+metallic = 0.52
+roughness = 0.36
+
+[sub_resource type="SphereMesh" id="SphereMesh_motorling_eye"]
+radius = 0.028
+height = 0.056
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_motorling_eye"]
+albedo_color = Color(0.07, 0.07, 0.1, 1)
+roughness = 0.32
+
+[sub_resource type="SphereMesh" id="SphereMesh_motorling_spark"]
+radius = 0.046
+height = 0.092
+radial_segments = 14
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_motorling_spark"]
+albedo_color = Color(1, 0.88, 0.4, 1)
+emission_enabled = true
+emission = Color(1, 0.58, 0.12, 1)
+emission_energy_multiplier = 1.25
+
+[sub_resource type="BoxMesh" id="BoxMesh_motorling_fin"]
+size = Vector3(0.055, 0.065, 0.018)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_motorling_accent"]
+albedo_color = Color(0.9, 0.48, 0.1, 1)
+metallic = 0.62
+roughness = 0.42
+
+[sub_resource type="SphereMesh" id="SphereMesh_shell_dome"]
+radius = 0.12
+height = 0.24
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_shell"]
+albedo_color = Color(0.38, 0.48, 0.44, 1)
+metallic = 0.72
+roughness = 0.58
+
+[sub_resource type="BoxMesh" id="BoxMesh_shell_shard"]
+size = Vector3(0.16, 0.032, 0.13)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_slot"]
 size = Vector3(0.52, 0.28, 0.52)
@@ -130,6 +217,106 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07, 0)
 mesh = SubResource("BoxMesh_platform")
 surface_material_override/0 = SubResource("StandardMaterial3D_platform")
 
+[node name="IgorFigure" type="Node3D" parent="." unique_id=887001001]
+transform = Transform3D(0.906, 0, -0.422, 0, 1, 0, 0.422, 0, 0.906, -2.32, 0.1, 0.42)
+
+[node name="Body" type="MeshInstance3D" parent="IgorFigure" unique_id=887001002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26, 0)
+mesh = SubResource("BoxMesh_igor_body")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_yellow")
+
+[node name="Head" type="MeshInstance3D" parent="IgorFigure" unique_id=887001003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_igor_head")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_head")
+
+[node name="EyeL" type="MeshInstance3D" parent="IgorFigure" unique_id=887001004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.065, 0.56, 0.11)
+mesh = SubResource("SphereMesh_igor_eye")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_dark")
+
+[node name="EyeR" type="MeshInstance3D" parent="IgorFigure" unique_id=887001005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.065, 0.56, 0.11)
+mesh = SubResource("SphereMesh_igor_eye")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_dark")
+
+[node name="Antenna" type="MeshInstance3D" parent="IgorFigure" unique_id=887001006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.76, 0)
+mesh = SubResource("CylinderMesh_igor_antenna")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_antenna")
+
+[node name="NameLabel" type="Label3D" parent="IgorFigure" unique_id=887001007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.18)
+pixel_size = 0.0065
+billboard = 1
+modulate = Color(0.98, 0.95, 0.55, 1)
+outline_modulate = Color(0.05, 0.05, 0.08, 0.92)
+text = "I.G.O.R."
+outline_size = 10
+
+[node name="MotorlingPlaceholder" type="Node3D" parent="." unique_id=990010001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.06, 0.12, 0.52)
+script = ExtResource("4_motorling")
+
+[node name="Body" type="MeshInstance3D" parent="MotorlingPlaceholder" unique_id=990010002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11, 0)
+mesh = SubResource("CapsuleMesh_motorling")
+surface_material_override/0 = SubResource("StandardMaterial3D_motorling_body")
+
+[node name="EyeLeft" type="MeshInstance3D" parent="MotorlingPlaceholder" unique_id=990010003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.052, 0.14, 0.072)
+mesh = SubResource("SphereMesh_motorling_eye")
+surface_material_override/0 = SubResource("StandardMaterial3D_motorling_eye")
+
+[node name="EyeRight" type="MeshInstance3D" parent="MotorlingPlaceholder" unique_id=990010004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.052, 0.14, 0.072)
+mesh = SubResource("SphereMesh_motorling_eye")
+surface_material_override/0 = SubResource("StandardMaterial3D_motorling_eye")
+
+[node name="SparkGlow" type="MeshInstance3D" parent="MotorlingPlaceholder" unique_id=990010005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11, 0.02)
+mesh = SubResource("SphereMesh_motorling_spark")
+surface_material_override/0 = SubResource("StandardMaterial3D_motorling_spark")
+
+[node name="OptionalShellPieces" type="Node3D" parent="MotorlingPlaceholder" unique_id=990010006]
+
+[node name="FinLeft" type="MeshInstance3D" parent="MotorlingPlaceholder/OptionalShellPieces" unique_id=990010007]
+transform = Transform3D(0.906, 0, -0.422, 0, 1, 0, 0.422, 0, 0.906, -0.1, 0.08, 0)
+mesh = SubResource("BoxMesh_motorling_fin")
+surface_material_override/0 = SubResource("StandardMaterial3D_motorling_accent")
+
+[node name="FinRight" type="MeshInstance3D" parent="MotorlingPlaceholder/OptionalShellPieces" unique_id=990010008]
+transform = Transform3D(0.906, 0, 0.422, 0, 1, 0, -0.422, 0, 0.906, 0.1, 0.08, 0)
+mesh = SubResource("BoxMesh_motorling_fin")
+surface_material_override/0 = SubResource("StandardMaterial3D_motorling_accent")
+
+[node name="MotorlingLabel" type="Label3D" parent="MotorlingPlaceholder" unique_id=990010009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
+pixel_size = 0.006
+billboard = 1
+modulate = Color(1, 0.92, 0.65, 1)
+outline_modulate = Color(0.06, 0.05, 0.1, 0.9)
+text = "Motorcito"
+outline_size = 9
+
+[node name="MotorlingShell" type="Node3D" parent="." unique_id=990020001]
+transform = Transform3D(0.92, 0, -0.39, 0, 1, 0, 0.39, 0, 0.92, 1.82, 0.05, 0.34)
+
+[node name="DomePiece" type="MeshInstance3D" parent="MotorlingShell" unique_id=990020002]
+transform = Transform3D(0.95, 0, 0, 0, 0.48, 0, 0, 0, 0.95, 0.02, 0.06, -0.02)
+mesh = SubResource("SphereMesh_shell_dome")
+surface_material_override/0 = SubResource("StandardMaterial3D_shell")
+
+[node name="ShardA" type="MeshInstance3D" parent="MotorlingShell" unique_id=990020003]
+transform = Transform3D(0.82, 0.15, -0.55, -0.17, 0.98, 0, 0.54, 0.094, 0.84, -0.08, 0.03, 0.06)
+mesh = SubResource("BoxMesh_shell_shard")
+surface_material_override/0 = SubResource("StandardMaterial3D_shell")
+
+[node name="ShardB" type="MeshInstance3D" parent="MotorlingShell" unique_id=990020004]
+transform = Transform3D(0.76, -0.2, 0.62, 0.24, 0.97, 0, -0.6, 0.15, 0.79, 0.1, 0.02, -0.04)
+mesh = SubResource("BoxMesh_shell_shard")
+surface_material_override/0 = SubResource("StandardMaterial3D_shell")
+
 [node name="Slots" type="Node3D" parent="." unique_id=1435363189]
 
 [node name="SlotBase" type="StaticBody3D" parent="Slots" unique_id=154926627]
@@ -145,6 +332,15 @@ shape = SubResource("BoxShape3D_slot")
 mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
 
+[node name="SlotLabel" type="Label3D" parent="Slots/SlotBase" unique_id=1544743259]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+pixel_size = 0.006
+billboard = 1
+modulate = Color(0.92, 1, 0.95, 1)
+outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
+text = "Base"
+outline_size = 9
+
 [node name="SlotWheels" type="StaticBody3D" parent="Slots" unique_id=149247483]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.82, 0.02, -0.38)
 collision_mask = 0
@@ -158,6 +354,15 @@ shape = SubResource("BoxShape3D_slot")
 [node name="Marker" type="MeshInstance3D" parent="Slots/SlotWheels" unique_id=689105755]
 mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
+
+[node name="SlotLabel" type="Label3D" parent="Slots/SlotWheels" unique_id=689105756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+pixel_size = 0.006
+billboard = 1
+modulate = Color(0.92, 1, 0.95, 1)
+outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
+text = "Ruedas"
+outline_size = 9
 
 [node name="SlotMotor" type="StaticBody3D" parent="Slots" unique_id=1694942134]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.38)
@@ -173,6 +378,15 @@ shape = SubResource("BoxShape3D_slot")
 mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
 
+[node name="SlotLabel" type="Label3D" parent="Slots/SlotMotor" unique_id=1003082813]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+pixel_size = 0.006
+billboard = 1
+modulate = Color(0.92, 1, 0.95, 1)
+outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
+text = "Motor"
+outline_size = 9
+
 [node name="SlotBattery" type="StaticBody3D" parent="Slots" unique_id=1240109632]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82, 0.02, -0.38)
 collision_mask = 0
@@ -186,6 +400,15 @@ shape = SubResource("BoxShape3D_slot")
 [node name="Marker" type="MeshInstance3D" parent="Slots/SlotBattery" unique_id=182995317]
 mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
+
+[node name="SlotLabel" type="Label3D" parent="Slots/SlotBattery" unique_id=182995318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+pixel_size = 0.006
+billboard = 1
+modulate = Color(0.92, 1, 0.95, 1)
+outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
+text = "Batería"
+outline_size = 9
 
 [node name="SlotTool" type="StaticBody3D" parent="Slots" unique_id=2126990466]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65, 0.02, -0.38)
@@ -201,6 +424,15 @@ shape = SubResource("BoxShape3D_slot")
 mesh = SubResource("BoxMesh_slot_marker")
 surface_material_override/0 = SubResource("StandardMaterial3D_slot")
 
+[node name="SlotLabel" type="Label3D" parent="Slots/SlotTool" unique_id=1435616211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+pixel_size = 0.0055
+billboard = 1
+modulate = Color(0.92, 1, 0.95, 1)
+outline_modulate = Color(0.02, 0.08, 0.04, 0.9)
+text = "Herramienta"
+outline_size = 9
+
 [node name="Parts" type="Node3D" parent="." unique_id=968577069]
 
 [node name="BasePart" type="StaticBody3D" parent="Parts" unique_id=1330966262]
@@ -214,6 +446,15 @@ shape = SubResource("BoxShape3D_base")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Parts/BasePart" unique_id=2121207634]
 mesh = SubResource("BoxMesh_base")
 surface_material_override/0 = SubResource("StandardMaterial3D_yellow")
+
+[node name="PartLabel" type="Label3D" parent="Parts/BasePart" unique_id=2121207635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+pixel_size = 0.0065
+billboard = 1
+modulate = Color(1, 0.98, 0.75, 1)
+outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
+text = "Base"
+outline_size = 10
 
 [node name="WheelsPart" type="StaticBody3D" parent="Parts" unique_id=969628792]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.18, 1.05)
@@ -230,6 +471,15 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
 mesh = SubResource("CylinderMesh_wheel")
 surface_material_override/0 = SubResource("StandardMaterial3D_wheel")
 
+[node name="PartLabel" type="Label3D" parent="Parts/WheelsPart" unique_id=2139199023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
+pixel_size = 0.0065
+billboard = 1
+modulate = Color(0.9, 0.88, 1, 1)
+outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
+text = "Ruedas"
+outline_size = 10
+
 [node name="MotorPart" type="StaticBody3D" parent="Parts" unique_id=1276286238]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.2, 1.05)
 collision_mask = 0
@@ -242,6 +492,15 @@ shape = SubResource("BoxShape3D_motor")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Parts/MotorPart" unique_id=532116121]
 mesh = SubResource("BoxMesh_motor")
 surface_material_override/0 = SubResource("StandardMaterial3D_motor")
+
+[node name="PartLabel" type="Label3D" parent="Parts/MotorPart" unique_id=532116122]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+pixel_size = 0.0065
+billboard = 1
+modulate = Color(0.82, 0.92, 1, 1)
+outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
+text = "Motor"
+outline_size = 10
 
 [node name="BatteryPart" type="StaticBody3D" parent="Parts" unique_id=894179088]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 0.2, 1.05)
@@ -262,6 +521,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
 mesh = SubResource("BoxMesh_battery_cap")
 surface_material_override/0 = SubResource("StandardMaterial3D_battery_cap")
 
+[node name="PartLabel" type="Label3D" parent="Parts/BatteryPart" unique_id=728407247]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, 0)
+pixel_size = 0.0065
+billboard = 1
+modulate = Color(1, 0.9, 0.75, 1)
+outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
+text = "Batería"
+outline_size = 10
+
 [node name="ShovelPart" type="StaticBody3D" parent="Parts" unique_id=934149873]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65, 0.2, 1.05)
 collision_mask = 0
@@ -280,6 +548,15 @@ surface_material_override/0 = SubResource("StandardMaterial3D_shovel")
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.18, 0.12, 0)
 mesh = SubResource("CylinderMesh_shovel_handle")
 surface_material_override/0 = SubResource("StandardMaterial3D_shovel")
+
+[node name="PartLabel" type="Label3D" parent="Parts/ShovelPart" unique_id=1857910016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44, 0)
+pixel_size = 0.0065
+billboard = 1
+modulate = Color(0.95, 0.95, 1, 1)
+outline_modulate = Color(0.05, 0.05, 0.1, 0.9)
+text = "Pala"
+outline_size = 10
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=881073155]
 

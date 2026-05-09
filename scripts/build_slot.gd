@@ -2,6 +2,8 @@ extends StaticBody3D
 
 ## Hueco en la plataforma. Click / toque después de elegir una pieza para intentar colocarla.
 
+const DBG_PICK := false ## Poné en true para ver logs de picking (prefijo [IGOR pick]).
+
 @export_enum("BASE", "WHEELS", "MOTOR", "BATTERY", "TOOL") var slot_type: int = 0
 
 signal slot_clicked(slot: Node)
@@ -38,6 +40,19 @@ func flash_error() -> void:
 	tween.tween_property(_marker_mat, "albedo_color", _idle_marker_color, 0.08)
 
 
+## Pulso verde suave cuando la pieza encaja bien.
+func flash_success() -> void:
+	if _marker_mat == null:
+		return
+	var green := Color(0.25, 0.92, 0.45, maxf(_idle_marker_color.a, 0.55))
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_loops(3)
+	tween.tween_property(_marker_mat, "albedo_color", green, 0.12)
+	tween.tween_property(_marker_mat, "albedo_color", _idle_marker_color, 0.18)
+
+
 func _input_event(
 	_camera: Camera3D,
 	event: InputEvent,
@@ -48,10 +63,12 @@ func _input_event(
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
 		if mb.button_index == MOUSE_BUTTON_LEFT and mb.pressed:
-			print("Slot clicked: ", name)
+			if DBG_PICK:
+				print("[IGOR pick] Slot clicked: ", name)
 			slot_clicked.emit(self)
 	elif event is InputEventScreenTouch:
 		var st := event as InputEventScreenTouch
 		if st.pressed:
-			print("Slot clicked: ", name)
+			if DBG_PICK:
+				print("[IGOR pick] Slot clicked: ", name)
 			slot_clicked.emit(self)
