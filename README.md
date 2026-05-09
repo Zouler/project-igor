@@ -27,7 +27,7 @@ The **core loop** is playable: **Start Screen → Story Intro → Mission Select
 | [docs/VISUAL_IDENTITY_TODO.md](docs/VISUAL_IDENTITY_TODO.md) | Governance note + link to the evolving visual bible |
 | [docs/GAMEPLAY_VISION.md](docs/GAMEPLAY_VISION.md) | Core loop, workshop vs construction, tablet-first goals |
 | [docs/WORLD_AND_PROGRESSION.md](docs/WORLD_AND_PROGRESSION.md) | Planet map, terrain roles, civilization, ship endgame tone |
-| [docs/IGOR_CHARACTER_DESIGN.md](docs/IGOR_CHARACTER_DESIGN.md) | Emotional design, feedback philosophy, future IgorReactionSystem |
+| [docs/IGOR_CHARACTER_DESIGN.md](docs/IGOR_CHARACTER_DESIGN.md) | Emotional design, feedback philosophy, **prototype v1** (`scenes/characters/igor/`), future IgorReactionSystem |
 | [docs/MACHINE_SYSTEM.md](docs/MACHINE_SYSTEM.md) | Motorlings, parts taxonomy, machine families, playful failure |
 | [docs/FUTURE_MODULES.md](docs/FUTURE_MODULES.md) | Play-with-I.G.O.R., construction, scavenger, facilities, ship, M3 |
 

@@ -1,0 +1,225 @@
+[gd_scene load_steps=22 format=3 uid="uid://d2igorcharscn01"]
+
+[ext_resource type="Script" uid="uid://c4igorcharproto7" path="res://scripts/characters/igor_character.gd" id="1_igor"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yellow"]
+albedo_color = Color(0.86, 0.71, 0.3, 1)
+metallic = 0.18
+roughness = 0.58
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yellow_worn"]
+albedo_color = Color(0.68, 0.54, 0.24, 1)
+metallic = 0.12
+roughness = 0.72
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eye"]
+albedo_color = Color(0.12, 0.14, 0.18, 1)
+roughness = 0.45
+emission_enabled = true
+emission = Color(0.35, 0.42, 0.55, 1)
+emission_energy_multiplier = 0.45
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mouth"]
+albedo_color = Color(0.15, 0.12, 0.12, 1)
+roughness = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_antenna"]
+albedo_color = Color(0.88, 0.48, 0.22, 1)
+metallic = 0.28
+roughness = 0.48
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_joint"]
+albedo_color = Color(0.22, 0.2, 0.18, 1)
+metallic = 0.42
+roughness = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tag"]
+albedo_color = Color(0.48, 0.44, 0.38, 1)
+metallic = 0.38
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(0.52, 0.58, 0.34)
+
+[sub_resource type="BoxMesh" id="BoxMesh_head"]
+size = Vector3(0.36, 0.28, 0.3)
+
+[sub_resource type="SphereMesh" id="SphereMesh_eye"]
+radius = 0.056
+height = 0.112
+radial_segments = 12
+
+[sub_resource type="BoxMesh" id="BoxMesh_mouth"]
+size = Vector3(0.14, 0.035, 0.025)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_antenna"]
+top_radius = 0.022
+bottom_radius = 0.026
+height = 0.12
+radial_segments = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_chest"]
+size = Vector3(0.24, 0.08, 0.045)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_arm"]
+radius = 0.042
+height = 0.44
+radial_segments = 8
+rings = 4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_leg"]
+radius = 0.052
+height = 0.34
+radial_segments = 8
+rings = 4
+
+[sub_resource type="BoxMesh" id="BoxMesh_foot"]
+size = Vector3(0.2, 0.075, 0.26)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_head"]
+radius = 0.52
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_antenna"]
+radius = 0.28
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_chest"]
+size = Vector3(0.65, 0.44, 0.55)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_belly"]
+size = Vector3(0.88, 0.75, 0.58)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_feet"]
+size = Vector3(0.95, 0.38, 0.58)
+
+[node name="IgorCharacter" type="Node3D"]
+script = ExtResource("1_igor")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62, 0)
+mesh = SubResource("BoxMesh_body")
+surface_material_override/0 = SubResource("StandardMaterial3D_yellow")
+
+[node name="Head" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12, 0.04)
+mesh = SubResource("BoxMesh_head")
+surface_material_override/0 = SubResource("StandardMaterial3D_yellow_worn")
+
+[node name="EyeLeft" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.092, 1.14, 0.168)
+mesh = SubResource("SphereMesh_eye")
+surface_material_override/0 = SubResource("StandardMaterial3D_eye")
+
+[node name="EyeRight" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.092, 1.14, 0.168)
+mesh = SubResource("SphereMesh_eye")
+surface_material_override/0 = SubResource("StandardMaterial3D_eye")
+
+[node name="Mouth" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02, 0.162)
+mesh = SubResource("BoxMesh_mouth")
+surface_material_override/0 = SubResource("StandardMaterial3D_mouth")
+
+[node name="Antenna" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.32, 0.02)
+mesh = SubResource("CylinderMesh_antenna")
+surface_material_override/0 = SubResource("StandardMaterial3D_antenna")
+
+[node name="ChestTag" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78, 0.19)
+mesh = SubResource("BoxMesh_chest")
+surface_material_override/0 = SubResource("StandardMaterial3D_tag")
+
+[node name="ChestLabel" type="Label3D" parent="VisualRoot/ChestTag"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.028)
+text = "I.G.O.R."
+pixel_size = 0.0065
+billboard = 1
+shaded = false
+double_sided = true
+outline_size = 6
+outline_modulate = Color(0.05, 0.05, 0.08, 0.85)
+
+[node name="ArmLeft" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -0.36, 0.82, 0)
+mesh = SubResource("CapsuleMesh_arm")
+surface_material_override/0 = SubResource("StandardMaterial3D_yellow")
+
+[node name="ArmRight" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0.36, 0.82, 0)
+mesh = SubResource("CapsuleMesh_arm")
+surface_material_override/0 = SubResource("StandardMaterial3D_yellow")
+
+[node name="LegLeft" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, 0.28, 0)
+mesh = SubResource("CapsuleMesh_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_joint")
+
+[node name="LegRight" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 0.28, 0)
+mesh = SubResource("CapsuleMesh_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_joint")
+
+[node name="FootLeft" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, 0.048, 0.04)
+mesh = SubResource("BoxMesh_foot")
+surface_material_override/0 = SubResource("StandardMaterial3D_yellow_worn")
+
+[node name="FootRight" type="MeshInstance3D" parent="VisualRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 0.048, 0.04)
+mesh = SubResource("BoxMesh_foot")
+surface_material_override/0 = SubResource("StandardMaterial3D_yellow_worn")
+
+[node name="TouchAreas" type="Node3D" parent="."]
+
+[node name="HeadArea" type="StaticBody3D" parent="TouchAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12, 0.08)
+collision_layer = 1
+collision_mask = 0
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TouchAreas/HeadArea"]
+shape = SubResource("SphereShape3D_head")
+
+[node name="AntennaArea" type="StaticBody3D" parent="TouchAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38, 0.02)
+collision_layer = 1
+collision_mask = 0
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TouchAreas/AntennaArea"]
+shape = SubResource("SphereShape3D_antenna")
+
+[node name="ChestArea" type="StaticBody3D" parent="TouchAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0.14)
+collision_layer = 1
+collision_mask = 0
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TouchAreas/ChestArea"]
+shape = SubResource("BoxShape3D_chest")
+
+[node name="BellyArea" type="StaticBody3D" parent="TouchAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62, 0)
+collision_layer = 1
+collision_mask = 0
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TouchAreas/BellyArea"]
+shape = SubResource("BoxShape3D_belly")
+
+[node name="FeetArea" type="StaticBody3D" parent="TouchAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.05)
+collision_layer = 1
+collision_mask = 0
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TouchAreas/FeetArea"]
+shape = SubResource("BoxShape3D_feet")
+
+[node name="SpeechAnchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.15, 1.45, 0)
+
+[node name="ReactionTimer" type="Timer" parent="."]
+one_shot = true
