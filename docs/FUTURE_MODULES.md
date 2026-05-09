@@ -6,20 +6,32 @@ Planned or discussed **systems** that are **not** fully implemented in the curre
 
 ## A. Play with I.G.O.R. mode
 
-A **dedicated mode** where I.G.O.R. appears **almost full-screen** and the child interacts **directly** with him.
+A **dedicated mode** where I.G.O.R. appears **large on screen** and the child interacts **directly** with him.
 
-**Features (target):**
+### Shipped in v1
 
-- Tap body parts  
+- **Scene:** `scenes/play_with_igor.tscn` · **Script:** `scripts/play_with_igor.gd`  
+- Tap **head / antenna / chest / belly / feet** (prototype raycast)  
+- UI: **joke**, **song**, **happy**, **encourage** (localized `IGOR_PLAY_*` lines)  
+- **Touch-zone** debug toggle for development  
+- **Purpose:** **Not mission-focused** — companion / bonding time. See **[IGOR_CHARACTER_DESIGN.md](./IGOR_CHARACTER_DESIGN.md)**.
+
+### Play with I.G.O.R. mode v2 (polish target)
+
+- Cozy play screen / workshop corner composition (tablet-first)
+- Reaction categories (Fun / Feelings)
+- Randomized lines (avoid immediate repeats)
+- Light idle moments (8–12s) when the player is inactive
+- Future: paint, stickers, swappable parts, mini songs, richer emotions
+
+### Features (later)
+
 - Move / drag him  
 - Tickle; make him laugh  
-- Trigger jokes  
-- Trigger mini songs  
-- Change parts (later)  
-- Paint him; add stickers (later)  
-- Customize eyes, antenna, hands, colors (later)  
-
-**Purpose:** **Not mission-focused.** Builds **emotional attachment** to I.G.O.R. as a **companion**. See **[IGOR_CHARACTER_DESIGN.md](./IGOR_CHARACTER_DESIGN.md)**.
+- Change parts  
+- Paint him; add stickers  
+- Customize eyes, antenna, hands, colors  
+- More jokes, mini songs, emotions  
 
 ---
 

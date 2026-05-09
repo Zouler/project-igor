@@ -51,6 +51,13 @@ This document captures the **current visual direction** aligned with existing co
 - **Strong color coding** — mission state, actions, and feedback distinguishable quickly.
 - **Avoid tiny text and overloaded screens** — one clear focus per moment when possible.
 
+### UI Style Foundation v1
+
+- **Reusable helper**: `scripts/ui/ui_style.gd`
+- **Purpose**: Keep a consistent toy-like mechanical UI (chunky buttons, warm rounded panels) without a full theme system yet.
+- **Current scope**: Start Screen first; Mission Select only if safe.
+- **Future plan**: Gradually apply to Workshop, Test Zones, Community, and Play with I.G.O.R. mode.
+
 ---
 
 ## Materials (target language)

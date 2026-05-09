@@ -48,6 +48,7 @@ var _speech_bubble_root: Node3D = null
 var _touch_enabled: bool = true
 var _speech_visible: bool = false
 var _touch_cooldown_until_sec: float = -1.0
+var _debug_touch_zones_visible: bool = false
 
 var _idle_bob_tween: Tween = null
 var _antenna_idle_tween: Tween = null
@@ -83,6 +84,7 @@ func _ready() -> void:
 	_setup_speech_bubble()
 	_setup_touch_zones()
 	_setup_touch_debug_visuals()
+	_debug_touch_zones_visible = SHOW_TOUCH_DEBUG_VISUALS
 	_apply_debug_visual_visibility(SHOW_TOUCH_DEBUG_VISUALS)
 	_reaction_timer.one_shot = true
 	_reaction_timer.timeout.connect(_on_reaction_timer_timeout)
@@ -122,7 +124,35 @@ func _face_speech_to_camera() -> void:
 
 ## Show or hide semi-transparent touch zone meshes (safe if nodes missing).
 func set_touch_debug_visuals_visible(show_debug: bool) -> void:
+	_debug_touch_zones_visible = show_debug
 	_apply_debug_visual_visibility(show_debug)
+
+
+## Alias for tooling / UI (e.g. Play with I.G.O.R.).
+func set_debug_touch_zones_visible(show_zones: bool) -> void:
+	set_touch_debug_visuals_visible(show_zones)
+
+
+func toggle_debug_touch_zones() -> void:
+	set_touch_debug_visuals_visible(not _debug_touch_zones_visible)
+
+
+## Light motion for “Play with I.G.O.R.” joke button (does not emit tap signals).
+func play_joke_motion() -> void:
+	if _reaction_tween != null and _reaction_tween.is_valid():
+		_reaction_tween.kill()
+	_anim_head_tap()
+
+
+## Gentle bounce for song button (does not emit tap signals).
+func play_song_bounce() -> void:
+	if _reaction_tween != null and _reaction_tween.is_valid():
+		_reaction_tween.kill()
+	_reaction_tween = create_tween()
+	_reaction_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	var y0 := _visual_base_y
+	_reaction_tween.tween_property(_visual_root, "position:y", y0 + 0.055, 0.22)
+	_reaction_tween.tween_property(_visual_root, "position:y", y0, 0.32)
 
 
 func _apply_debug_visual_visibility(show_debug: bool) -> void:
