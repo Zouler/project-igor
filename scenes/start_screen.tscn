@@ -1,0 +1,282 @@
+[gd_scene format=3 uid="uid://d1n4k4lf4start"]
+
+[ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_startscreen"]
+
+[sub_resource type="Environment" id="Environment_start"]
+background_mode = 1
+background_color = Color(0.92, 0.84, 0.72, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 0.98, 0.94, 1)
+ambient_light_energy = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bg"]
+albedo_color = Color(0.58, 0.66, 0.78, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_bg"]
+size = Vector3(14, 8, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.62, 0.52, 0.4, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(14, 0.16, 12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igor_yellow"]
+albedo_color = Color(0.96, 0.84, 0.16, 1)
+roughness = 0.45
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igor_grey"]
+albedo_color = Color(0.78, 0.78, 0.84, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igor_dark"]
+albedo_color = Color(0.12, 0.12, 0.16, 1)
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_igor_body"]
+size = Vector3(0.55, 0.62, 0.38)
+
+[sub_resource type="BoxMesh" id="BoxMesh_igor_head"]
+size = Vector3(0.38, 0.28, 0.34)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_igor_arm"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.42
+radial_segments = 10
+
+[sub_resource type="SphereMesh" id="SphereMesh_igor_eye"]
+radius = 0.06
+height = 0.12
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_motorling"]
+albedo_color = Color(0.98, 0.66, 0.18, 1)
+metallic = 0.45
+roughness = 0.38
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_motorling_spark"]
+albedo_color = Color(1, 0.88, 0.45, 1)
+emission_enabled = true
+emission = Color(1, 0.58, 0.12, 1)
+emission_energy_multiplier = 1.35
+roughness = 0.35
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_motorling"]
+radius = 0.12
+height = 0.26
+radial_segments = 12
+rings = 6
+
+[sub_resource type="SphereMesh" id="SphereMesh_spark"]
+radius = 0.07
+height = 0.14
+radial_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gear"]
+albedo_color = Color(0.82, 0.75, 0.35, 1)
+metallic = 0.55
+roughness = 0.45
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gear"]
+top_radius = 0.16
+bottom_radius = 0.16
+height = 0.06
+radial_segments = 12
+
+[sub_resource type="BoxMesh" id="BoxMesh_gear_tooth"]
+size = Vector3(0.06, 0.06, 0.08)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start"]
+bg_color = Color(0.16, 0.14, 0.2, 0.72)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+content_margin_left = 14
+content_margin_top = 12
+content_margin_right = 14
+content_margin_bottom = 12
+
+[node name="StartScreen" type="Node3D"]
+script = ExtResource("1_startscreen")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 4.6, 3.2, 6.2)
+current = true
+fov = 52.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 2.2, 6.2, 4.2)
+light_color = Color(1, 0.97, 0.9, 1)
+light_energy = 1.05
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_start")
+
+[node name="SimpleBackground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, -5.2)
+mesh = SubResource("BoxMesh_bg")
+surface_material_override/0 = SubResource("StandardMaterial3D_bg")
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08, 0.4)
+mesh = SubResource("BoxMesh_floor")
+surface_material_override/0 = SubResource("StandardMaterial3D_floor")
+
+[node name="IgorTitleRobotPlaceholder" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0, 0.2)
+
+[node name="Body" type="MeshInstance3D" parent="IgorTitleRobotPlaceholder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34, 0)
+mesh = SubResource("BoxMesh_igor_body")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_yellow")
+
+[node name="Head" type="MeshInstance3D" parent="IgorTitleRobotPlaceholder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78, 0)
+mesh = SubResource("BoxMesh_igor_head")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_grey")
+
+[node name="Eye" type="MeshInstance3D" parent="IgorTitleRobotPlaceholder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78, 0.19)
+mesh = SubResource("SphereMesh_igor_eye")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_dark")
+
+[node name="ArmL" type="MeshInstance3D" parent="IgorTitleRobotPlaceholder"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -0.42, 0.42, 0)
+mesh = SubResource("CylinderMesh_igor_arm")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_grey")
+
+[node name="ArmR" type="MeshInstance3D" parent="IgorTitleRobotPlaceholder"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0.42, 0.42, 0)
+mesh = SubResource("CylinderMesh_igor_arm")
+surface_material_override/0 = SubResource("StandardMaterial3D_igor_grey")
+
+[node name="MotorlingPreview" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75, 0.18, 0.1)
+
+[node name="MotorlingBody" type="MeshInstance3D" parent="MotorlingPreview"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
+mesh = SubResource("CapsuleMesh_motorling")
+surface_material_override/0 = SubResource("StandardMaterial3D_motorling")
+
+[node name="Spark" type="MeshInstance3D" parent="MotorlingPreview"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43, 0)
+mesh = SubResource("SphereMesh_spark")
+surface_material_override/0 = SubResource("StandardMaterial3D_motorling_spark")
+
+[node name="DecorationGears" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, -1.2)
+
+[node name="Gear1" type="MeshInstance3D" parent="DecorationGears"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0.08, 0)
+mesh = SubResource("CylinderMesh_gear")
+surface_material_override/0 = SubResource("StandardMaterial3D_gear")
+
+[node name="ToothN" type="MeshInstance3D" parent="DecorationGears"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -0.2)
+mesh = SubResource("BoxMesh_gear_tooth")
+surface_material_override/0 = SubResource("StandardMaterial3D_gear")
+
+[node name="ToothS" type="MeshInstance3D" parent="DecorationGears"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0.2)
+mesh = SubResource("BoxMesh_gear_tooth")
+surface_material_override/0 = SubResource("StandardMaterial3D_gear")
+
+[node name="ToothE" type="MeshInstance3D" parent="DecorationGears"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.1, 0)
+mesh = SubResource("BoxMesh_gear_tooth")
+surface_material_override/0 = SubResource("StandardMaterial3D_gear")
+
+[node name="ToothW" type="MeshInstance3D" parent="DecorationGears"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.1, 0)
+mesh = SubResource("BoxMesh_gear_tooth")
+surface_material_override/0 = SubResource("StandardMaterial3D_gear")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="VBoxContainer" parent="CanvasLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.14, 0.12, 0.18, 1)
+theme_override_font_sizes/font_size = 36
+text = "Proyecto I.G.O.R."
+
+[node name="SubtitleLabel" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.18, 0.16, 0.22, 1)
+theme_override_font_sizes/font_size = 18
+text = "Inventive Guide Operating Robot"
+
+[node name="ButtonPanel" type="Panel" parent="CanvasLayer/UI"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_start")
+
+[node name="Buttons" type="VBoxContainer" parent="CanvasLayer/UI/ButtonPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 12.0
+offset_right = -14.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="StartButton" type="Button" parent="CanvasLayer/UI/ButtonPanel/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Empezar"
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer/UI/ButtonPanel/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Continuar"
+
+[node name="ResetDemoButton" type="Button" parent="CanvasLayer/UI/ButtonPanel/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Reiniciar demo"
+
+[node name="Spacer" type="Control" parent="CanvasLayer/UI"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="SmallFooterLabel" type="Label" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.16, 0.14, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "Construí máquinas. Ayudá al planeta."
+

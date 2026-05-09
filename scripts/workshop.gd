@@ -3,6 +3,7 @@ extends Node3D
 ## Escena principal 3D del taller: selección de pieza + click en slot, validación con «Probar».
 
 const BuildStateScript := preload("res://scripts/build_state.gd")
+const MissionStateScript := preload("res://scripts/mission_state.gd")
 
 const DBG_WORKSHOP := false ## Poné en true para ver señales (prefijo [IGOR workshop]).
 
@@ -13,6 +14,7 @@ const IgorGuideScript := preload("res://scripts/igor_guide.gd")
 
 @onready var _igor_label: Label = %IgorMessageLabel
 @onready var _title_label: Label = %TitleLabel
+@onready var _mission_label: Label = %MissionLabel
 @onready var _test_button: Button = %TestButton
 @onready var _reset_button: Button = %ResetButton
 
@@ -20,6 +22,7 @@ var _selected_part: Node = null
 var _validation_slots: Array = []
 var _igor_guide: RefCounted
 var _build_state: BuildStateScript
+var _mission_state: MissionStateScript
 ## Transform local inicial de cada pieza respecto a Parts (para Reiniciar).
 var _part_initial_transform: Dictionary = {}
 ## Evita programar varias veces el cambio a la zona de prueba si se aprieta Probar repetidamente.
@@ -28,10 +31,15 @@ var _test_zone_transition_scheduled: bool = false
 
 func _ready() -> void:
 	_build_state = get_node("/root/BuildState") as BuildStateScript
+	_mission_state = get_node("/root/MissionState") as MissionStateScript
 	_igor_guide = IgorGuideScript.new()
 	_setup_camera()
 	_title_label.text = "Taller I.G.O.R."
 	set_igor_message("Este motorcito necesita un cuerpo. Elegí una pieza para empezar.")
+
+	if not _mission_state.mission_started:
+		_mission_state.start_first_mission()
+	_mission_label.text = "Misión: %s" % _mission_state.current_mission_title
 
 	_validation_slots = [
 		$Slots/SlotBase,
@@ -138,6 +146,8 @@ func _on_test_pressed() -> void:
 		return
 	_test_zone_transition_scheduled = true
 	_build_state.set_from_workshop(_validation_slots)
+	_mission_state.mark_machine_built()
+	print("MissionState: machine built")
 	var motorling := get_node_or_null("MotorlingPlaceholder")
 	if motorling != null and motorling.has_method("success_pulse"):
 		motorling.success_pulse()

@@ -1,0 +1,290 @@
+[gd_scene format=3 uid="uid://dxv3b8mv3yeo"]
+
+[ext_resource type="Script" path="res://scripts/community.gd" id="1_community"]
+
+[sub_resource type="Environment" id="Environment_comm"]
+background_mode = 1
+background_color = Color(0.62, 0.52, 0.78, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.98, 0.92, 0.88, 1)
+ambient_light_energy = 0.52
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground_c"]
+albedo_color = Color(0.48, 0.4, 0.55, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground_c"]
+size = Vector3(16.0, 0.14, 14.0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_path_c"]
+albedo_color = Color(0.72, 0.88, 0.58, 1)
+roughness = 0.42
+
+[sub_resource type="BoxMesh" id="BoxMesh_path_c"]
+size = Vector3(1.15, 0.045, 5.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_house_body"]
+albedo_color = Color(0.88, 0.62, 0.38, 1)
+roughness = 0.65
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_house_roof"]
+albedo_color = Color(0.72, 0.42, 0.32, 1)
+roughness = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_house_door"]
+albedo_color = Color(0.35, 0.22, 0.18, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_house_body"]
+size = Vector3(0.95, 0.52, 0.75)
+
+[sub_resource type="BoxMesh" id="BoxMesh_house_roof"]
+size = Vector3(1.05, 0.12, 0.82)
+
+[sub_resource type="BoxMesh" id="BoxMesh_house_door"]
+size = Vector3(0.22, 0.38, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_core_c"]
+albedo_color = Color(1, 0.78, 0.35, 1)
+emission_enabled = true
+emission = Color(1, 0.65, 0.2, 1)
+emission_energy_multiplier = 1.85
+roughness = 0.35
+
+[sub_resource type="SphereMesh" id="SphereMesh_core_c"]
+radius = 0.14
+height = 0.28
+radial_segments = 14
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_petal"]
+top_radius = 0.04
+bottom_radius = 0.06
+height = 0.2
+radial_segments = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gear_c"]
+albedo_color = Color(0.82, 0.75, 0.35, 1)
+metallic = 0.55
+roughness = 0.4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gear_c"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.05
+radial_segments = 12
+
+[sub_resource type="BoxMesh" id="BoxMesh_block_c"]
+size = Vector3(0.18, 0.22, 0.18)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_comm"]
+bg_color = Color(0.14, 0.12, 0.22, 0.74)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 12
+content_margin_top = 10
+content_margin_right = 12
+content_margin_bottom = 10
+
+[node name="Community" type="Node3D"]
+script = ExtResource("1_community")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 5.8, 3.85, 7.2)
+fov = 52.0
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.35, 0.35, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 1.5, 6.0, 4.0)
+light_color = Color(1, 0.95, 0.88, 1)
+light_energy = 1.05
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_comm")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07, 0)
+mesh = SubResource("BoxMesh_ground_c")
+surface_material_override/0 = SubResource("StandardMaterial3D_ground_c")
+
+[node name="RestoredPath" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.02, 0.35)
+mesh = SubResource("BoxMesh_path_c")
+surface_material_override/0 = SubResource("StandardMaterial3D_path_c")
+
+[node name="SmallWorkshopOrHouse" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35, 0, 0.35)
+
+[node name="HouseBody" type="MeshInstance3D" parent="SmallWorkshopOrHouse"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26, 0)
+mesh = SubResource("BoxMesh_house_body")
+surface_material_override/0 = SubResource("StandardMaterial3D_house_body")
+
+[node name="HouseRoof" type="MeshInstance3D" parent="SmallWorkshopOrHouse"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.58, 0)
+mesh = SubResource("BoxMesh_house_roof")
+surface_material_override/0 = SubResource("StandardMaterial3D_house_roof")
+
+[node name="HouseDoor" type="MeshInstance3D" parent="SmallWorkshopOrHouse"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0.4)
+mesh = SubResource("BoxMesh_house_door")
+surface_material_override/0 = SubResource("StandardMaterial3D_house_door")
+
+[node name="PlanetCoreLight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55, 0.22, -0.55)
+
+[node name="CoreLight" type="OmniLight3D" parent="PlanetCoreLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, 0)
+light_color = Color(1, 0.82, 0.45, 1)
+light_energy = 2.2
+omni_range = 4.5
+shadow_enabled = false
+
+[node name="CoreSphere" type="MeshInstance3D" parent="PlanetCoreLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, 0)
+mesh = SubResource("SphereMesh_core_c")
+surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
+
+[node name="PetalN" type="MeshInstance3D" parent="PlanetCoreLight"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.16, -0.22)
+mesh = SubResource("CylinderMesh_petal")
+surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
+
+[node name="PetalS" type="MeshInstance3D" parent="PlanetCoreLight"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0.16, 0.22)
+mesh = SubResource("CylinderMesh_petal")
+surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
+
+[node name="PetalE" type="MeshInstance3D" parent="PlanetCoreLight"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.22, 0.16, 0)
+mesh = SubResource("CylinderMesh_petal")
+surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
+
+[node name="PetalW" type="MeshInstance3D" parent="PlanetCoreLight"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -0.22, 0.16, 0)
+mesh = SubResource("CylinderMesh_petal")
+surface_material_override/0 = SubResource("StandardMaterial3D_core_c")
+
+[node name="DecorationPieces" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 1.15)
+
+[node name="Gear1" type="MeshInstance3D" parent="DecorationPieces"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0.06, 0)
+mesh = SubResource("CylinderMesh_gear_c")
+surface_material_override/0 = SubResource("StandardMaterial3D_gear_c")
+
+[node name="Gear2" type="MeshInstance3D" parent="DecorationPieces"]
+transform = Transform3D(0.707107, 0, -0.707107, -0.5, 0.707107, -0.5, 0.5, 0.707107, 0.5, 0.35, 0.12, 0.2)
+mesh = SubResource("CylinderMesh_gear_c")
+surface_material_override/0 = SubResource("StandardMaterial3D_gear_c")
+
+[node name="BlockA" type="MeshInstance3D" parent="DecorationPieces"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.12, 0.15)
+mesh = SubResource("BoxMesh_block_c")
+surface_material_override/0 = SubResource("StandardMaterial3D_house_roof")
+
+[node name="BlockB" type="MeshInstance3D" parent="DecorationPieces"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.08, -0.1)
+mesh = SubResource("BoxMesh_block_c")
+surface_material_override/0 = SubResource("StandardMaterial3D_gear_c")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="VBoxContainer" parent="CanvasLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.98, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Un poquito de planeta"
+
+[node name="IgorMessageLabel" type="Label" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.94, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 19
+text = "Una parte del planeta volvió a moverse."
+autowrap_mode = 3
+
+[node name="ProgressLabel" type="Label" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.85, 0.95, 0.88, 1)
+theme_override_font_sizes/font_size = 20
+text = "Progreso del planeta: 1%"
+
+[node name="MissionStatusLabel" type="Label" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.75, 1)
+theme_override_font_sizes/font_size = 18
+text = "Primera misión completada"
+
+[node name="ButtonRow" type="HBoxContainer" parent="CanvasLayer/UI"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="BackToWorkshopButton" type="Button" parent="CanvasLayer/UI/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Volver al taller"
+
+[node name="NextButton" type="Button" parent="CanvasLayer/UI/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Siguiente misión"
+
+[node name="Spacer" type="Control" parent="CanvasLayer/UI"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="HintPanel" type="Panel" parent="CanvasLayer/UI"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_comm")
+
+[node name="HintLabel" type="Label" parent="CanvasLayer/UI/HintPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.92, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "Cada máquina que probamos despierta un poquito más al planeta mecánico."
+autowrap_mode = 3

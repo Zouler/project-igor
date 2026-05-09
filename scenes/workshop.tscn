@@ -593,6 +593,14 @@ theme_override_font_sizes/font_size = 20
 text = "Mensaje de I.G.O.R."
 autowrap_mode = 3
 
+[node name="MissionLabel" type="Label" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.88, 0.98, 0.92, 1)
+theme_override_font_sizes/font_size = 18
+text = "Misión: Despejar el primer camino"
+
 [node name="ButtonRow" type="HBoxContainer" parent="CanvasLayer/UI" unique_id=1286608618]
 layout_mode = 2
 size_flags_horizontal = 0

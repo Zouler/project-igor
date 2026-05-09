@@ -3,6 +3,7 @@ extends Node3D
 ## Zona de prueba MVP: la máquina despeja piedras; aspecto según BuildState.
 
 const BuildStateScript := preload("res://scripts/build_state.gd")
+const MissionStateScript := preload("res://scripts/mission_state.gd")
 
 @onready var _igor_label: Label = %IgorMessageLabel
 @onready var _start_button: Button = %StartTestButton
@@ -10,12 +11,14 @@ const BuildStateScript := preload("res://scripts/build_state.gd")
 @onready var _back_button: Button = %BackToWorkshopButton
 
 var _build_state: BuildStateScript
+var _mission_state: MissionStateScript
 var test_running: bool = false
 var test_completed: bool = false
 
 
 func _ready() -> void:
 	_build_state = get_node("/root/BuildState") as BuildStateScript
+	_mission_state = get_node("/root/MissionState") as MissionStateScript
 	_setup_camera()
 	_apply_machine_from_build_state()
 	_reset_mission_visuals()
@@ -68,12 +71,16 @@ func _go_to_workshop() -> void:
 	get_tree().change_scene_to_file("res://scenes/workshop.tscn")
 
 
+func _go_to_community() -> void:
+	get_tree().change_scene_to_file("res://scenes/community.tscn")
+
+
 func _on_back_pressed() -> void:
 	_go_to_workshop()
 
 
 func _on_continue_pressed() -> void:
-	_go_to_workshop()
+	_go_to_community()
 
 
 func _on_start_pressed() -> void:
@@ -87,6 +94,8 @@ func _on_start_pressed() -> void:
 	test_running = false
 	test_completed = true
 	print("Test completed")
+	_mission_state.mark_test_completed()
+	print("MissionState: test completed")
 	$ClearedPath.visible = true
 	$SuccessSign.visible = true
 	$RewardGear.visible = true

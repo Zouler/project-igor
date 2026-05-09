@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 BuildState="*res://scripts/build_state.gd"
+MissionState="*res://scripts/mission_state.gd"
 
 [physics]
 
